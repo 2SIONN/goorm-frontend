@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .box {
+      width: 200px;
+      height: 200px;
+      background-color: #0ff;
+    }
+
+    .color {
+      background-color: #f00;
+      color: #fff;
+    }
+
+    .hidden {
+      visibility: hidden;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #000000;
+    }
+
+    .modal-content {
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    #tab-list {
+      display: flex;
+      list-style-type: none;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    .tab-item {
+      display: inline-block;
+      white-space: nowrap;
+      margin-right: 20px;
+      background-color: #f2f2f2;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #e2e2e2;
+      }
+    }
+
+    .active {
+      background-color: #f00;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <div>
+    <button type="button" id="myBtn">버튼</button>
+    <div id="div1" class="box">아무 텍스트</div>
+  </div>
+
+  <div>
+    <button type="button" id="menuBtn"><i class="fa-solid fa-chevron-up"></i></button>
+    <nav id="menu" class="hidden">
+      <ul>
+        <li>홈</li>
+        <li>서비스</li>
+        <li>문의</li>
+      </ul>
+    </nav>
+  </div> -->
+  <div>
+    <button type="button" id="open-btn">모달 열기</button>
+    <div class="modal" id="modal-container">
+      <div class="modal-content" id="modal-content">
+        <header id="page-header"
+          style="position: sticky; top: 0; height: 50px;background-color: #0ff; display: flex; justify-content: space-between; align-items: center; padding: 0 5px;">
+          모달 팝업
+          <button type="button" id="close-btn">닫기</button>
+        </header>
+        <div id="container">
+          <div style="height: 2000px;"></div>
+        </div>
+        <button type="button" class="hidden" id="btn">더보기</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <ul id="tab-list"></ul>
+    <p id="selected-tab"></p>
+  </div>
+</body>
+<script>
+  // const button = document.getElementById('myBtn');
+  // const menu = document.getElementById('menu');
+  // button.addEventListener('click', () => {
+  //   const div1 = document.getElementById('div1');
+  //   div1.classList.add('color');
+  // });
+
+  // const menuBtn = document.getElementById('menuBtn');
+  // menuBtn.addEventListener('click', () => {
+  //   menu.classList.toggle('hidden');
+  //   console.log('메뉴 상태: ', menu.classList.contains('hidden') ? '닫힘' : '열림');
+  // });
+
+  // const header = document.querySelector('#page-header');
+  const btn = document.getElementById('btn');
+  const container = document.getElementById('container');
+  const openBtn = document.getElementById('open-btn');
+  const closeBtn = document.getElementById('close-btn');
+  const modal = document.getElementById('modal-container');
+  const modalContent = document.getElementById('modal-content');
+  modalContent.addEventListener('scroll', () => {
+    // if (window.scrollY > 100) {
+    //   header.style.backgroundColor = '#00000016';
+    // } else {
+    //   header.style.backgroundColor = 'black';
+    // }
+
+    if (Math.ceil(modalContent.scrollTop) === modalContent.scrollHeight - modalContent.offsetHeight) {
+      btn.classList.remove('hidden');
+    } else if (!btn.classList.contains('hidden')) {
+      btn.classList.add('hidden');
+    }
+  });
+
+  btn.addEventListener('click', () => {
+    const div = document.createElement('div');
+    div.style.height = '2000px';
+    container.append(div);
+  })
+  openBtn.addEventListener('click', () => {
+    modal.style.display = 'flex';
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  const tabList = document.getElementById('tab-list');
+  const currentTab = document.getElementById('selected-tab');
+  for (let i = 0; i < 30; i++) {
+    const li = document.createElement('li');
+    li.setAttribute('id', 'item' + i);
+    li.setAttribute('class', 'tab-item');
+    li.innerHTML = `탭 ${i + 1}`;
+    tabList.appendChild(li);
+  }
+
+  tabList.addEventListener('click', (e) => {
+    const clickedItem = e.target;
+    if (clickedItem.tagName.toLowerCase() !== 'li') return;
+    const activeTab = tabList.querySelector('.tab-item.active');
+    if (activeTab) activeTab.classList.remove('active');
+    clickedItem.classList.add('active');
+    const containerRect = tabList.getBoundingClientRect();
+    const tabRect = clickedItem.getBoundingClientRect();
+    const offset = tabRect.left + (tabRect.width / 2) - (containerRect.left + (containerRect.width / 2));
+    tabList.scrollBy({ left: offset, behavior: 'smooth' });
+    // clickedItem.scrollIntoView({
+    //   behavior: 'smooth',
+    //   inline: 'center',
+    //   block: 'nearest',
+    // });
+    currentTab.textContent = `${clickedItem.textContent} 클릭됨`;
+  });
+
+</script>
+
+</html>
