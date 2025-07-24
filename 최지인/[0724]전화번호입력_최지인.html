@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<!-- https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/String/split, https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/String/substring, https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/String/slice#indexstart -->
+
+<body>
+  <form>
+    <div style="display:flex ; flex-direction: column; width: 500px;">
+      <h1>🚨휴대폰 번호를 입력해주세요.</h1>
+      <label>휴대폰 번호&nbsp<input type="tel" id="telInput" placeholder="하이픈(-)을 넣어 입력해주세요."></label>
+      <br>
+      <button type="button" onclick="checkEntry()" style="width: 300px;">입력완료</button>
+      <p id="message"></p>
+    </div>
+  </form>
+
+</body>
+<script>
+  function checkEntry() {
+    const tel = document.getElementById("telInput").value;
+    const message = document.getElementById("message");
+    //3.4.4로 입력되지 않으면 오류 메시지 출력
+    //-?는 하이픈이 있을 수도 없을 수도 있다는 뜻.
+    if (!/^\d{3}-?\d{4}-?\d{4}$/.test(tel) || tel === "") {
+      message.innerHTML = "번호를 다시 입력해주세요.";
+
+    }
+    else {
+      message.innerHTML = "확인";
+    }
+
+    //인풋값의 값을 가지고 오면 됨. value를 가지고 와서 하이픈이 없으면
+    //텍스트를 자르는 문자열 slice,
+    //문자를 잘라서 하이픈을 붙여서 재배합
+    if (!tel.includes("-") && tel.length == 11) {
+      const part1 = tel.slice(0, 3);
+      const part2 = tel.slice(3, 7);
+      const part3 = tel.slice(7, 11);
+
+      //input 화면을 다시 바꾸는 것.
+      document.getElementById("telInput").value = `${part1}-${part2}-${part3}`;
+    }
+
+    // console.log(typeof tel);
+  }
+</script>
+
+</html>
