@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .wrap {
+      height: 100vh;
+      width: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 300px;
+      height: 200px;
+      background-color: antiquewhite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .warning {
+      color: red;
+    }
+  </style>
+  <body>
+    <div class="wrap">
+      <div class="container">
+        <h2>휴대폰 번호 입력</h2>
+        <div class="phone-container">
+          <label for="phone">전화번호</label>
+          <input type="tel" id="phone" />
+          <button id="phoneBtn">번호 입력</button>
+          <p class="warning" id="msg"></p>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const phone = document.getElementById("phone");
+    const phoneBtn = document.getElementById("phoneBtn");
+    const msg = document.getElementById("msg");
+
+    phoneBtn.addEventListener("click", () => {
+      const value = phone.value.trim();
+
+      if (value === "") {
+        msg.textContent = "전화번호를 입력해주세요!";
+        return;
+      }
+
+      const phoneArr = value.split("-");
+
+      if (
+        phoneArr[0].length !== 3 ||
+        phoneArr[1].length !== 4 ||
+        phoneArr[2].length !== 4
+      ) {
+        msg.textContent = "형식이 올바르지 않습니다";
+        return;
+      }
+
+      msg.textContent = "입력 완료!";
+    });
+  </script>
+</html>
+<!-- 
+- 조건2: 번호가 3자리-4자리-4자리로 입력되지 않으면 오류 메시지 출력
+- 조건3: 사용자가 번호를 하이픈 없이 넣은 경우 하이픈을 넣어주세요
+- 조건4: 빈 값인 경우 오류 메시지 출력 -->
