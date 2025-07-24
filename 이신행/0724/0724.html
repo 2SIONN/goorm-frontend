@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자기소개</title>
+    <h1>입장 확인기</h1>
+</head>
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+</style>
+<body>
+    <label for="name">이름: </label>
+    <input type="text" id="name" name="name" placeholder="이름을 입력해주세요.">
+    <label for="age">나이: </label>
+    <input type="number" id="age" name="age" placeholder="숫자로 입력">
+    <button id="button">입장 가능 여부 확인</button>
+    <p id="result"></p>
+</body>
+<script>
+    const button = document.getElementById('button');
+    button.addEventListener('click', ()=>{
+        const name = document.getElementById('name').value;
+        const age = parseInt(document.getElementById('age').value);
+        if(typeof name !=="string" || isNaN(age)){
+            document.getElementById('result').textContent = '이름과 나이를 정확하게 입력해주세요.';
+            return;
+        }
+        if(age>=20){
+            document.getElementById('result').textContent = `${name}님은 입장 가능합니다! ${age+1}살에 다시 오세요!`;
+        }
+        else{
+            document.getElementById('result').textContent = `${name}님은 미성년자입니다. 입장 불가!`;
+        }
+    });
+</script>
+</html>
