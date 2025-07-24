@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>박스박스</title>
+    <style>
+        .hidden{
+            display:none;
+        }
+
+        .visible{
+            display:block;
+        }
+
+        #load-more{
+            margin-top:30px;
+            padding:10px 20px;
+            font-size:16px;
+            display:none;
+        }
+        .box{
+            width: 500px;
+            height:500px;
+            background-color:aliceblue;
+            margin:5px;
+            text-align:center;
+            line-height:50px;
+
+        }
+    </style>
+</head>
+<body>
+    <header id="page-header" style="height: 50px; background: lightgray;position:sticky;top:0;">헤더</header>
+    <div style="height:2000px;"></div>
+    <button type="button" id="menu-btn">메뉴 열기/닫기</button>
+    <nav id="menu" style="display:none;">
+        <ul>
+            <li>홈</li>
+            <li>서비스</li>
+            <li>문의하기</li>
+        </ul>
+    </nav>
+    <div class="box-container"></div>
+    <button id="open-modal-btn">모달 열기</button>
+    <div class = "modal" id="modal">
+        <div class="modal-content">
+            <button id=""close-modal-btn">닫기</button>
+        </div>
+    <button id="load-more">더보기</button>
+    </div>
+    <script>
+
+  const header = document.querySelector('#page-header');
+  const boxContainer = document.querySelector('.box-container');
+  const loadMoreBtn = document.getElementById('load-more');
+  const menuBtn = document.getElementById('menu-btn');
+  const menu = document.getElementById('menu');
+
+  const modal = document.getElementById('modal');  
+  
+
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+      header.style.backgroundColor = 'tomato';
+      header.style.opacity='0.7';
+    } else {
+      header.style.backgroundColor = 'lightgray';
+    }
+    console.log('스크롤 위치:', window.scrollY);
+
+
+    const scrolledToBottom= window.innerHeight+window.scrollY>=document.body.offsetHeight;
+
+    const loadMoreBtn=document.getElementById('load-more');
+    if(scrolledToBottom)
+    {
+        loadMoreBtn.style.display='block';
+     } else{
+        loadMoreBtn.style.display='none';
+    }
+     console.log('스크롤 위치: ',window.scrollY);
+    });
+
+
+    menuBtn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+    console.log('메뉴 상태:', menu.classList.contains('hidden') ? '닫힘' : '열림');
+    });
+
+    loadMoreBtn.addEventListener('click',function(){
+
+        const newBox=document.createElement('div');
+        newBox.classList.add('box');
+        newBox.textContent = '박스'; 
+        boxContainer.appendChild(newBox);
+    })
+    </script>
+    
+</body>
+</html>

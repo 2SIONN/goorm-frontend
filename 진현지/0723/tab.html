@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>탭탭</title>
+  <style>
+    .tabs-container {
+      overflow-x: auto;
+      white-space: nowrap;
+      border-bottom: 2px solid #ddd;
+      padding: 10px;
+    }
+
+    .tab-item {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 5px;
+      background: #eee;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab-item.active {
+      background: antiquewhite;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tabs-container" id="tabs-container"></div> 
+  <div id="tab-content" style="margin-top:20px;"></div>
+
+  <script>
+    const container = document.getElementById('tabs-container');
+    const tabContent = document.getElementById('tab-content');
+
+    for (let i = 1; i <= 20; i++) {
+      const tab = document.createElement('div'); 
+      tab.classList.add('tab-item');
+      tab.textContent = `탭 ${i}`;
+      container.appendChild(tab);
+    }
+
+  
+    container.addEventListener('click', (e) => {
+      const clickedTab = e.target;
+      if (!clickedTab.classList.contains('tab-item')) return;
+
+      const currentActive = container.querySelector('.tab-item.active');
+      if (currentActive) currentActive.classList.remove('active');
+
+      clickedTab.classList.add('active');
+      
+      clickedTab.scrollIntoView(
+        {
+            behavior:'smooth',
+            inline:'center',
+        });
+  
+      tabContent.textContent = `${clickedTab.textContent} 클릭됨`;
+    });
+  </script>
+</body>
+</html>

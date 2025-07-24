@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이승헌 포트폴리오</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- 왼쪽 프로필 -->
+      <div class="left">
+        <div class="profile">
+          <img src="../7-15/image5.jpeg" alt="프로필" />
+          <h2 class="name">이승헌 LEE SEUNG HEON</h2>
+        </div>
+        <div class="info">
+          <p>💻 프론트엔드개발자</p>
+          <p>📍 대구광역시 북구</p>
+          <p>📧 0129seungheon@gmail.com</p>
+          <p>📞 010-7760-3807</p>
+        </div>
+
+        <div class="skills">
+          <h3>🛠️ Skills</h3>
+          <div class="skill">
+            <span>HTML/CSS</span>
+            <div class="bar"><div class="fill fill1"></div></div>
+          </div>
+          <div class="skill">
+            <span>JavaScript</span>
+            <div class="bar"><div class="fill fill2"></div></div>
+          </div>
+          <div class="skill">
+            <span>TypeScript</span>
+            <div class="bar"><div class="fill fill3"></div></div>
+          </div>
+          <div class="skill">
+            <span>React</span>
+            <div class="bar"><div class="fill fill4"></div></div>
+          </div>
+        </div>
+
+        <div class="langs">
+          <h3>🌎 Languages</h3>
+          <div class="skill">
+            <span>한국어</span>
+            <div class="bar"><div class="fill fill5"></div></div>
+          </div>
+          <div class="skill">
+            <span>영어</span>
+            <div class="bar"><div class="fill fill6"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽 내용 -->
+      <div class="right">
+        <div class="section">
+          <h2>Project Experience</h2>
+
+          <label for="modal1" class="project-box">
+            <h3>감정 일기장</h3>
+            <p>2025.04 ~ 2025.05</p>
+          </label>
+
+          <label for="modal2" class="project-box">
+            <h3>넷플릭스 클론</h3>
+            <p>2024.05 ~ 2024.06</p>
+          </label>
+        </div>
+
+        <div class="section">
+          <h2>Education</h2>
+
+          <div class="item">
+            <h3>구름 부트캠프</h3>
+            <p class="date">📅 2025 - 2025</p>
+            <p>프론트엔드개발자 과정</p>
+          </div>
+
+          <div class="item">
+            <h3>영남이공대학교</h3>
+            <p class="date">📅 2020 - 2025</p>
+            <p>소프트웨어콘텐츠학과</p>
+          </div>
+
+          <div class="item">
+            <h3>학남고등학교</h3>
+            <p class="date">📅 2016 - 2019</p>
+            <p>이과</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <div class="footer">
+      <p>Find me on social media.</p>
+      <div class="icons">
+        <a href="https://github.com/12seungheon">git</a>
+      </div>
+      <p>2025 SEUNGHEON LEE. All rights reserved.</p>
+    </div>
+
+    <!-- 모달 -->
+    <input type="checkbox" id="modal1" class="modal-toggle" hidden />
+    <div class="modal">
+      <div class="modal-content">
+        <label for="modal1" class="close">✕</label>
+        <h3>감정 일기장</h3>
+        <ul>
+          <li class="list-img"><img src="./diary.png" alt="" /></li>
+          <li>한 입 크기로 잘라먹는 리액트</li>
+          <li>간단한 CRUD</li>
+        </ul>
+      </div>
+    </div>
+
+    <input type="checkbox" id="modal2" class="modal-toggle" hidden />
+    <div class="modal">
+      <div class="modal-content">
+        <label for="modal2" class="close">✕</label>
+        <h3>넷플릭스 클론</h3>
+        <ul>
+          <li class="list-img"><img src="./netflix.png" alt="" /></li>
+          <li>TMDB API로 영화 목록 구현</li>
+          <li>React + Tailwind UI</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
