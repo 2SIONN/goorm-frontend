@@ -54,11 +54,30 @@
     const msg = document.getElementById("msg");
 
     phoneBtn.addEventListener("click", () => {
-      const value = phone.value.trim();
+      let value = phone.value.trim();
 
       if (value === "") {
         msg.textContent = "전화번호를 입력해주세요!";
         return;
+      }
+
+      if (!value.includes("-")) {
+        let numberOnly = "";
+
+        for (let i = 0; i < value.length; i++) {
+          if (value[i] >= 0 && value[i] <= 9) {
+            numberOnly += value[i];
+          }
+        }
+
+        value =
+          numberOnly.slice(0, 3) +
+          "-" +
+          numberOnly.slice(3, 7) +
+          "-" +
+          numberOnly.slice(7);
+
+        phone.value = value;
       }
 
       const phoneArr = value.split("-");
@@ -76,7 +95,10 @@
     });
   </script>
 </html>
+
 <!-- 
+- 조건1: input type tel
 - 조건2: 번호가 3자리-4자리-4자리로 입력되지 않으면 오류 메시지 출력
 - 조건3: 사용자가 번호를 하이픈 없이 넣은 경우 하이픈을 넣어주세요
-- 조건4: 빈 값인 경우 오류 메시지 출력 -->
+- 조건4: 빈 값인 경우 오류 메시지 출력
+-->
