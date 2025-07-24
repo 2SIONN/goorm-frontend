@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+    .navigation{
+        width:100%;
+        height:100px;
+        background-color: #333;
+        position:fixed;
+        top:0;
+        left:0;
+        overflow-x: auto;
+        display:flex;
+    }
+    .tab{
+        display:flex;
+        align-items: center;
+
+    }
+    .tabs{
+        background-color: #777;
+        align-items: center;
+        justify-content: center;
+        margin-left:20px;
+        margin-right:20px;
+        border-radius:10px;
+        font-size: 50px;
+        padding: 5px 10px;
+    }
+    .content{
+        display:none;
+    }
+    #display-area{
+        margin-top:120px;
+        padding:20px;
+        font-size:24px;
+    }
+</style>
+<body>
+    <div>
+        <nav class="navigation">
+            <div class="tab">
+                <div class="tabs">tab1
+                    <div class="content">tab1입니다.</div>
+                </div>
+                <div class="tabs">tab2
+                    <div class="content">tab2입니다.</div>
+                </div>
+                <div class="tabs">tab3
+                    <div class="content">tab3입니다.</div>
+                </div>
+                <div class="tabs">tab4
+                    <div class="content">tab4입니다.</div>
+                </div>
+                <div class="tabs">tab5
+                    <div class="content">tab5입니다.</div>
+                </div>
+                <div class="tabs">tab6
+                    <div class="content">tab6입니다.</div>
+                </div>
+                <div class="tabs">tab7
+                    <div class="content">tab7입니다.</div>
+                </div>
+                <div class="tabs">tab8
+                    <div class="content">tab8입니다.</div>
+                </div>
+                <div class="tabs">tab9
+                    <div class="content">tab9입니다.</div>
+                </div>
+                <div class="tabs">tab10
+                    <div class="content">tab10입니다.</div>
+                </div>
+                <div class="tabs">tab11
+                    <div class="content">tab11입니다.</div>
+                </div>
+                <div class="tabs">tab12
+                    <div class="content">tab12입니다.</div>
+                </div>
+                <div class="tabs">tab13
+                    <div class="content">tab13입니다.</div>
+                </div>
+            </div>
+        </nav>
+        <div id="display-area">탭을 선택하세요.</div>
+    </div>
+</body>
+<script>
+    const tabs = document.querySelectorAll('.tabs');
+    const displayArea = document.getElementById('display-area');
+    tabs.forEach(tab=>{
+        tab.addEventListener('click', ()=>{
+            const content = tab.querySelector('.content').textContent.trim();
+            displayArea.textContent = content;
+            tabs.forEach(t=>{
+                t.style.backgroundColor='#777';
+            });
+            tab.style.backgroundColor='aquamarine';
+            tab.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'center',
+                block: 'nearest'
+            });
+        });
+    });
+
+
+</script>
+</html>
