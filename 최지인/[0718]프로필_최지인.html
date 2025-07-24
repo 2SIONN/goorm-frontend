@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>profile</title>
+  <script src="https://kit.fontawesome.com/dc509bed33.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      list-style: none;
+
+      font-family: "Noto Sans", sans-serif;
+      font-optical-sizing: auto;
+    }
+
+    .fa-solid {
+      color: #006aff;
+    }
+
+    section {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+
+    .wrap {
+      width: 100%;
+      height: 100%;
+      background-color: #eee;
+
+
+    }
+
+    .title {
+      width: 100%;
+      height: 100px;
+      background-color: rgb(252, 252, 252);
+      text-align: left;
+      line-height: 100px;
+      padding-left: 20px;
+
+
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+      padding: 20px;
+
+      /* 깃크라켄 소스,포크, 깃밴즈(유로) */
+    }
+
+    .item {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-flow: column wrap;
+      width: 100%;
+      height: auto;
+      padding: 20px;
+
+
+    }
+
+    .item:first-child {
+      grid-row: 1 / 3;
+
+    }
+
+    .item:nth-child(2) {
+      grid-row: 1 /2;
+    }
+
+    .item:nth-child(3) {
+      grid-row: 2/3;
+    }
+
+    /* 포트폴리오 */
+    .item:nth-child(4) {
+      grid-row: 3 / 4;
+      grid-column: 2 / 3;
+    }
+
+    .section-item {
+      padding: 20px 0;
+    }
+
+
+
+    footer {
+      background-color: rgb(0, 0, 0);
+      width: 100%;
+      height: 200px;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .f-ul {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-flow: column wrap;
+      gap: 7px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 요소 */
+    .profile-img {
+      width: 100%;
+      height: 200px;
+      /* 이미지 비율 유지, 여백이 생길 수 있음/ cover은 잘리지만 여백이 안 생김 */
+      object-fit: cover;
+      border-radius: 10px 10px 0px 0px;
+    }
+
+    .item-ul {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-flow: column wrap;
+      gap: 20px;
+    }
+
+    .item-ul li {
+      color: #000000;
+    }
+
+    .line {
+      width: 100%;
+      height: 1px;
+      background-color: #006aff;
+    }
+
+    .skills {
+      display: flex;
+      flex-flow: column wrap;
+      gap: 20px;
+      padding-top: 20px
+    }
+
+    .skills li {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 40px;
+      background-color: #eee;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .progress-bar li {
+      border-radius: 10px;
+      height: 100%;
+    }
+
+    .percent {
+      height: 40px;
+      background: linear-gradient(91deg, #00aaff, #0000ff);
+    }
+
+    .percent1 {
+      width: 80%;
+    }
+
+    .percent2 {
+      width: 10%;
+    }
+
+    .percent3 {
+      width: 100%;
+      background: none;
+
+    }
+
+    .percent4 {
+      width: 100%;
+      background: none;
+    }
+
+    .percent5 {
+      width: 100%;
+    }
+
+    .percent6 {
+      width: 50%;
+    }
+
+    .percent span {
+      display: none;
+    }
+
+    .progress-bar:hover .percent span {
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .right-section-title {
+      display: flex;
+      flex-flow: column wrap;
+      gap: 7px;
+      padding-bottom: 15px;
+    }
+
+    .ex-ul {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-flow: column wrap;
+      gap: 2px;
+      color: #3c3c3c;
+    }
+
+    .ex-ul li {
+      width: 100%;
+      list-style-type: disc;
+      list-style-position: inside;
+    }
+
+    .job {
+      font-size: 20px;
+      font-weight: bold;
+      color: #3c3c3c;
+    }
+
+    .day {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .f-icon {
+      color: #fff;
+      padding-right: 7PX;
+    }
+
+    .port-container {
+      width: 100%;
+      height: 150px;
+      display: flex;
+      flex-flow: row wrap;
+      gap: 20px;
+    }
+
+    .port-img img {
+      width: 100%;
+      height: 150px;
+      border: 2px solid #a92d2d;
+    }
+
+    .port-text {
+      width: 50%;
+      height: 150px;
+    }
+
+    #modal-toggle {
+      display: none;
+    }
+
+    .open-btn {
+      cursor: pointer;
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    #modal-toggle:checked+label+.modal {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      width: 800px;
+      height: 700px;
+    
+      position: relative;
+      overflow-y: scroll;
+    }
+
+    iframe {
+      width: 780px;
+      height: 800px;
+      border: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1000;
+      color: #555;
+    }
+
+    .mail {
+      position: fixed;
+      color: #0000ff;
+      font-size: 100px;
+      top: 80%;
+      right: 40px;
+    }
+
+    .mail:hover {
+      transform: scale(1.2);
+      transition: transform 2s linear ease;
+      color: #2d2dff;
+    }
+
+    i.fa-solid.fa-xmark {
+      position: absolute;
+      font-size: 50px;
+      right: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <!--  2am 3am-->
+  <div class="wrap">
+    <!-- 이메일 모달 -->
+    <form class="send-mail">
+      <input type="checkbox" id="modal-toggle" hidden>
+      <label for="modal-toggle" class="open-btn"><i class="fa-solid fa-envelope mail"></i></label>
+      <div class="modal">
+        <div class="modal-content">
+          <label for="modal-toggle" class="close-btn">
+            <i class="fa-solid fa-xmark"></i>
+            <iframe src="[0717]메일_최지인.html"></iframe>
+          </label>
+        </div>
+
+      </div>
+    </form>
+    <!-- 이메일 모달끝 -->
+    <h2 class="title">최지인 프로필</h2>
+
+    <section>
+
+      <div class="container">
+        <div class="item">
+          <img src="https://i.pinimg.com/736x/79/b0/ec/79b0ecb417378f8c334fabee05bbdbce.jpg" alt="내 사진"
+            class="profile-img">
+          <div class="section-item">
+            <ul class="item-ul">
+              <li class="item-ul-li"><i class="fa-solid fa-briefcase"></i> &nbsp;최지인</li>
+              <li class="item-ul-li"><i class="fa-solid fa-house"></i> &nbsp;충청남도 보령시</li>
+              <li class="item-ul-li"><a><i class="fa-solid fa-envelope"></i></a> &nbsp;cji2025@naver.com</li>
+              <li class="item-ul-li"><i class="fa-solid fa-phone"></i> &nbsp;010 6515 0687</li>
+            </ul>
+          </div>
+
+          <div class="line"></div>
+
+          <!-- skills 섹션 -->
+          <div class="section-item">
+            <h2><i class="fa-solid fa-certificate"></i> Skills</h2>
+            <ul class="skills">
+              <li>HTML/CSS
+                <ul class="progress-bar">
+                  <li class="percent percent1"><span>80%</span></li>
+                </ul>
+              </li>
+              <li>Javascript
+                <ul class="progress-bar">
+                  <li class="percent percent2"><span>8%</span></li>
+                </ul>
+              </li>
+              <li>Typescript
+                <ul class="progress-bar">
+                  <li class="percent percent3"><span>100%를 향하여!</span></li>
+                </ul>
+              </li>
+              <li>React
+                <ul class="progress-bar">
+                  <li class="percent percent4"><span>100%를 향하여!</span></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!--skills끝  -->
+          <div class="section-item">
+            <h2><i class="fa-solid fa-bullhorn"></i> Languages</h2>
+            <ul class="skills">
+              <li>한국어
+                <ul class="progress-bar">
+                  <li class="percent percent5"><span>유일한 100%</span></li>
+                </ul>
+              </li>
+              <li>영어
+                <ul class="progress-bar">
+                  <li class="percent percent6"><span>100%를 향하여!</span></li>
+                </ul>
+              </li>
+
+            </ul>
+          </div>
+
+        </div>
+        <!-- 오른쪽 첫번째 그리드 -->
+        <div class="item">
+          <h2><i class="fa-solid fa-certificate"></i> Work Experience</h2>
+          <div class="section-item">
+            <div class="right-section-title"><span class="job">(희망사항)Front End Developer / 여행 업계</span>
+              <span class="day"> <i class="fa-solid fa-calendar-days"></i> &nbsp;2026 ~ </span>
+            </div>
+
+            <ul class="ex-ul">
+              <li class="item-ul-li">프로젝트 구조 설계 및 각종 컴포너트 개발 예정</li>
+              <li class="item-ul-li">소셜 로그인 및 본인인증 도입 예정</li>
+              <li class="item-ul-li">결제 기능 구현 예정</li>
+              <li class="item-ul-li">사용기술:React/Vue, Next.js/Vue.js, Typescript, Redux/Vuex</li>
+            </ul>
+          </div>
+
+
+
+          <div class="line"></div>
+
+          <div class="section-item">
+            <div class="right-section-title"><span class="job">UX UI Designer(인턴) / (주)아이디어콘서트</span>
+              <span class="day"><i class="fa-solid fa-calendar-days"></i> &nbsp;Jul2023 ~ Feb2024</span>
+            </div>
+
+            <ul class="ex-ul">
+              <li class="item-ul-li">반응형 페이지 디자인</li>
+              <li class="item-ul-li">배너 제작</li>
+              <li class="item-ul-li">QA진행</li>
+              <li class="item-ul-li">사용툴:Zepline, XD, Ps, Ai, Slack</li>
+            </ul>
+          </div>
+
+
+        </div>
+        <!-- 오른쪽 그리드 두번째 -->
+        <div class="item">
+          <h2><i class="fa-solid fa-certificate"></i> Education</h2>
+          <div class="section-item">
+            <div class="right-section-title"><span class="job">구름 부트캠프</span>
+              <span class="day"> <i class="fa-solid fa-calendar-days"></i> &nbsp;Jul2025 ~ current</span>
+            </div>
+
+            <ul class="ex-ul">
+              <li class="item-ul-li">프론트엔드 개발자 과정</li>
+            </ul>
+          </div>
+          <div class="section-item">
+            <div class="right-section-title"><span class="job">남서울대학교</span>
+              <span class="day"> <i class="fa-solid fa-calendar-days"></i> &nbsp;2020 ~ 2024</span>
+            </div>
+
+            <ul class="ex-ul">
+              <li class="item-ul-li">멀티미디어학과</li>
+            </ul>
+          </div>
+
+          <div class="line"></div>
+          <div class="section-item">
+            <div class="right-section-title"><span class="job">대천여자고등학교</span>
+              <span class="day"> <i class="fa-solid fa-calendar-days"></i> &nbsp;2017 ~ 2020</span>
+            </div>
+
+            <ul class="ex-ul">
+              <li class="item-ul-li">문과</li>
+            </ul>
+          </div>
+        </div>
+        <!-- 포트폴리오 -->
+        <div class="item">
+          <h2><i class="fa-solid fa-certificate"></i> portfolio</h2>
+          <div class="section-item">
+
+            <!-- 포트폴리오1 -->
+            <div class="right-section-title"><span class="job">'다소니' 프로젝트(HTML, CSS, JS, JSP, MySQL)</span>
+              <span class="day"> <i class="fa-solid fa-calendar-days"></i> &nbsp;DEC 2022 ~ MAY 2023</span>
+            </div>
+            <div class="port-container">
+              <div class="port-img"><img src="portfolio-Dasoni.png"></div>
+              <div class="port-text">해당 사이트는 꽃 판매 사이트입니다. Google Teachable Machine을 활용한 꽃추천 메뉴, 상황에 어울리는 꽃 찾기 메뉴 등
+                흥미로운 메뉴를 더하여 개인 맟춤형 서비스를 제공합니다.</div>
+            </div>
+            <!-- 끝 -->
+
+
+
+
+
+            <!-- .섹션 아이템 끝 -->
+          </div>
+          <div class="line"></div>
+          <div class="section-item">
+
+            <!-- 포트폴리오2 -->
+            <div class="right-section-title"><span class="job">'함박도시락' 프로젝트(HTML, CSS, JS, JSP, MySQL)</span>
+              <span class="day"> <i class="fa-solid fa-calendar-days"></i> &nbsp;Sep 2022 ~ Nov 2022</span>
+            </div>
+            <div class="port-container">
+              <div class="port-img"><img src="portfolio-Hambak.png"></div>
+              <div class="port-text">해당 사이트는 맞춤형 도시락 판매 사이트입니다.
+                메뉴소개, 주문 등의 메뉴를 가운데 배치하여 사용자가 쉽게 이용할 수 있게 제작하였습니다.
+              </div>
+            </div>
+            <!-- 끝 -->
+          </div>
+          <div class="line"></div>
+          <div class="section-item">
+
+            <!-- 포트폴리오2 -->
+            <div class="right-section-title"><span class="job">'mine' 프로젝트(Android Studio, MySQL, XD)</span>
+              <span class="day"> <i class="fa-solid fa-calendar-days"></i> &nbsp;Sep 2022 ~ Nov 2022</span>
+            </div>
+            <div class="port-container">
+              <div class="port-img"><img src="portfolio-mine.jpg"></div>
+              <div class="port-text">해당 앱은 'mine'이라는 메모앱입니다. 테마 및 배경 설정, 메모 기능을 추가한 간단한 메모앱니다. </div>
+            </div>
+            <!-- 끝 -->
+
+          </div>
+        </div>
+        <!-- 포트폴리오 -->
+      </div>
+      <!-- .container -->
+  </div>
+  <!-- wrap -->
+
+  </section>
+  <footer>
+    <ul class="f-ul">
+      <li class="f-ul-li">구름에서 만나요</li>
+      <li class="f-ul-li">
+        <a href="https://www.goorm.io/dashboard"><i class="fa-solid fa-landmark f-icon"></i></a>
+
+      </li>
+      <li class="f-ul-li">ⓒ2025 CHOI JIIN All rights Reseved
+        Tistory</li>
+    </ul>
+  </footer>
+
+  </div>
+
+</body>
+
+</html>
