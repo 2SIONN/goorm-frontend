@@ -1,0 +1,54 @@
+<!-- scroll.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+  <style>
+    .addBox {
+      height: 200px;
+      background-color: greenyellow;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header id="page-header" style="height: 50px; background: lightgray; position: sticky; top: 0;">머리</header>
+  <div style="height:1000px"></div>
+  <div class="container" id="box-container"></div>
+  <button id="more-btn">더보기</button>
+  <button id="close-modal">닫기</button>
+
+  <script>
+    const header = document.getElementById('page-header');
+    const moreBtn = document.getElementById('more-btn');
+    const boxContainer = document.getElementById('box-container');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        header.style.backgroundColor = 'aqua';
+      } else {
+        header.style.backgroundColor = 'lightgray';
+      }
+      console.log('스크롤 위치:', window.scrollY);
+    });
+
+    moreBtn.addEventListener('click', () => {
+      const box = document.createElement('div');
+      box.className = 'addBox';
+      boxContainer.appendChild(box);
+    });
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+      if (window.parent) {
+        const modal = window.parent.document.getElementById('modal');
+        const iframe = window.frameElement;
+        if (modal && iframe) {
+          modal.style.display = 'none';
+          iframe.src = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

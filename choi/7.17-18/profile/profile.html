@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+    <title>my profile</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body{
+        background-color: #B7F0B1;
+    }
+
+    h3{
+        font-size: 14px;
+        color: #8C8C8C;
+    }
+
+    ul{
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    li{
+        font-size: 12px;
+        margin-top: 5px;
+        margin-bottom: 3px;
+        list-style: none;
+    }
+
+    span{
+        font-size: 10px;
+        }
+
+    div .type{
+        margin-bottom:8px;
+    }
+
+    footer {
+        background-color: #47C83E;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 40px;
+        width: 100%;
+    }
+    .wrapper{
+        max-width: 960px;
+        margin: 0 auto;
+    }
+    .container{
+        display:grid;
+        grid-template-columns: 280px 1fr;
+        margin:16px;
+        gap: 16px;
+        max-width: 960px; 
+        
+    }
+    /* profile */
+    .profile-box{
+        background-color: white;
+        padding: 10px;
+        border-radius: 10px;
+        height: fit-content;
+        box-shadow: 10px 10px 10px rgba(0,0,0, 0.2);
+        position: sticky;
+        top: 16px;
+    }
+
+    /* profile-image */
+    .img-box{
+        width:100%;
+        overflow: hidden;
+    }
+
+    .img-wrap{
+        position: relative;
+        width: 100%;
+    }
+
+    .img-wrap img {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .name{
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        color: black;
+        padding: 6px 12px;
+    }
+
+    .github-chart {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+        border-radius: 8px;
+    }
+
+    /* skill&language*/
+    .skills{
+        margin-top:16px;
+    }
+
+    .skill-bar{
+        margin-top: 8px;
+        background-color: white;
+        height: 10px;
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .skill-percent{
+        height:100%;
+        background-color: #47C83E;
+        width: 0%;
+        border-radius: 20px;
+        transition: width 1.5s ease;
+    }
+
+    .percent-text {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 10px;
+        color: black;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .p90:hover .skill-percent {
+        width: 90%;
+    }
+
+    .p80:hover .skill-percent {
+        width: 80%;
+    }
+
+    .p60:hover .skill-percent {
+        width: 60%;
+    }
+
+    .p30:hover .skill-percent  {
+        width: 30%;
+    }
+    .p90:hover .percent-text,
+    .p80:hover .percent-text,
+    .p60:hover .percent-text,
+    .p30:hover .percent-text{
+        opacity: 1;
+    }
+
+    .period{
+        font-size: 14px;
+        font-weight: bold;
+        color: #47C83E;
+    }
+
+    /* mainbar*/
+    .mainbar{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .introduce-box,
+    .experience-box,
+    .education-box{
+        background-color: white;
+        padding: 15px;
+        border-radius: 10px;
+        min-height: 300px;
+        box-shadow: 10px 10px 10px rgba(0,0,0, 0.2);
+
+    }
+    /* project */
+    .project-box{
+        background-color: white;
+        margin: 16px;
+        padding: 10px;
+        border-radius: 10px;
+        height: fit-content;
+        box-shadow: 10px 10px 10px rgba(0,0,0, 0.2);
+    }
+
+    .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr)); 
+        gap: 20px;
+    }
+
+    .project-card {
+        background-color: whitesmoke;
+        padding: 10px;
+        border-color: #333;
+        border-radius: 10px;
+        box-shadow: 10px 10px 10px rgba(0,0,0,0.2);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    
+    .project-card img {
+        width: 100%;
+        height: 180px;
+        margin-bottom: 10px;
+        object-fit: cover;
+    }
+    
+    .project-box ul {
+        border-bottom: none;
+
+    }
+
+    /* footer */
+    .open-modal {
+        cursor: pointer;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        background: rgba(0,0,0,0.6);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    #modal-toggle:checked ~ .modal {
+        display: flex;
+    }
+
+    .modal-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        height: 80%;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.4);
+        overflow: hidden;
+    }
+
+    .modal-content iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 8px;
+        right: 14px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        cursor: pointer;
+    }
+    
+</style>
+<body>
+<header></header>
+<div class="wrapper">
+    <div class="container">
+        <div class="profile-box">
+            <div class="img-box">
+                <div class="img-wrap">
+                    <img src="profile.jpg" alt="프로필">
+                    <h2 class="name">최원형</h2>
+                </div>
+            </div>
+            <div class="profile-info">
+                <ul class="my-info">
+                    <li>📁 프론트엔드개발자</li>
+                    <li>⛺ 경기도 평택시</li>
+                    <li>📧 chldnjsgud0607@gmail.com</li>
+                    <li>📱 01045670864</li>
+                </ul>
+            </div>
+            <div class="skills">
+                <h3 style="margin-bottom: 8px;">🃏 skills</h3>
+                <div class="type p80">
+                    <span>HTML/CSS</span>
+                    <div class="skill-bar">
+                        <div class="skill-percent">
+                            <span class="percent-text">80%</span>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="type p60">
+                    <span>JavaScript</span>
+                    <div class="skill-bar">
+                        <div class="skill-percent">
+                            <span class="percent-text">60%</span>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="type p30">
+                    <span>React</span>
+                    <div class="skill-bar">
+                        <div class="skill-percent">
+                            <span class="percent-text">30%</span>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="type p60">
+                    <span>Mysql</span>
+                    <div class="skill-bar">
+                        <div class="skill-percent">
+                            <span class="percent-text">60%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="languages">
+            <h3 style="margin-bottom: 8px;">🌐 Languages</h3>
+            <div class="type">
+                <span>한국어</span>
+                <div class="skill-bar p90" style="height: 15px;">
+                    <div class="skill-percent">
+                        <span class="percent-text">90%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="type">
+                <span>영어</span>
+                <div class="skill-bar p30" style="height: 15px;">
+                    <div class="skill-percent">
+                        <span class="percent-text">30%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="mainbar">
+            <div class="introduce-box">
+                <p class="intro-text">
+                <h3 style="font-size: 28px; margin-bottom: 20px;">🙋🏻‍♂️ Introduce</h3>
+                    이름 : <strong>최원형</strong>입니다.<br>
+                    성격 : 조금은 무뚝뚝하고 뭔가 이상해 보일수도 있지만 착할겁니다<br>
+                    포부 : <strong>7개월간 최선을 다해</strong> 임하겠습니다!<br>
+                    프론트엔트를 원하는 이유 : 프론트엔드 개발자는 사용자가 직접 마주하는 <strong>인터페이스를 만들고</strong>,
+                    그 반응을 바로 볼 수 있어 매력적입니다.<br>
+                </p>
+<!-- 물결표시 노래추가 --> 
+                <div class="intro-image">
+                    <img src="https://ghchart.rshah.org/asdfdk123" class="github-chart">
+                    <p class="img-caption">이렇게 텅텅 비어있는 사막에서 열심히 채울수 있도록 해보겠습니다!</p>
+                </div>
+
+            </div>
+            <div class="experience-box">
+                <h3 style="font-size: 28px; margin-bottom: 20px;">📂 Work Experience</h3>
+                <div class="wrap">
+                    <h3>Frontend Developer</h3>
+                    <span class="period">📅 NOW ~ </span>
+                    <ul>
+                        <li>아무나 시켜만 주면 좋죠 이제부터 만들어 봐야죠</li>
+                    </ul>
+                </div>
+                <div class="wrap">
+                    <h3>미친 알바</h3>
+                    <span class="period">📅 23.9 ~ NOW</span>
+                    <ul>
+                        <li>으라차차 현생살기</li>
+                    </ul>
+                </div>
+                <div class="wrap">
+                    <h3>시청 인턴</h3>
+                    <span class="period">📅 24.06~24.08</span>
+                    <ul>
+                        <li>민원 및 잔업 처리</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="education-box">
+                <h3 style="font-size: 28px; margin-bottom: 20px;">📝 Education</h3>
+                <div class="wrap">
+                    <h3>구름 부트캠프</h3>
+                    <span class="period">📅 25.07 ~ NOW</span>
+                    <ul>
+                        <li>프론트엔드개발자 과정</li>
+                    </ul>
+                </div>
+                <div class="wrap">
+                    <h3>한경국립대학교</h3>
+                    <span class="period">📅 20.03 ~ NOW</span>
+                    <ul>
+                        <li>소프트웨어융합전공</li>
+                    </ul>
+                </div>
+                <div class="wrap">
+                    <h3>한광고등학교</h3>
+                    <span class="period">📅 16.03 ~ 20.02</span>
+                    <ul>
+                        <li>이과</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="project-box">
+        <h3 style="font-size: 28px; margin-bottom: 20px;">🖥️ project</h3>
+        <div class="project-grid">
+            <!-- 카드 1번 -->
+            <div class="project-card">
+                <img src="project1.png" alt="프로젝트1" />
+                <h3>Groom DeepDive</h3>
+                <ul>
+                    <li class="period">25.07 ~ NOW</li>
+                    <li>개발자 되기 프로젝트</li>
+                </ul>
+            </div>
+            <!-- 카드 2번 -->
+            <div class="project-card">
+                <img src="project2.png" alt="프로젝트2" />
+                <h3>전자기기 중고거래 사이트</h3>
+                <ul>
+                    <li class="period">25.03 ~ NOW</li>
+                    <li>학교 졸업작품 제작 중</li>
+                </ul>
+            </div>
+            <!-- 카드 3번 -->
+            <div class="project-card">
+                <img src="project3.jpg" alt="프로젝트3" />
+                <h3>Achro-EM kit 리듬게임</h3>
+                <ul>
+                    <li class="period">25.04 ~ 25.06</li>
+                    <li>임베디드 리듬게임 개발</li>
+                </ul>
+            </div>
+            <!-- 카드 4번 -->
+            <div class="project-card">
+                <img src="project4.png" alt="프로젝트4" />
+                <div class="project-info">
+                    <h3>중고책 중고거래 사이트</h3>
+                    <ul>
+                        <li class="period">24.09 ~ 24.11</li>
+                        <li>사이드 프로젝트</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="checkbox" id="modal-toggle" hidden> 
+</body>
+<footer>
+    <label for="modal-toggle" class="open-modal" style="cursor: pointer;">
+        <i class="fas fa-envelope"></i>
+    </label>
+    <a href="https://github.com/asdfdk123" target="_blank" class="footer-link">
+        <i class="fab fa-github open-modal"></i>
+    </a>
+    <a href="https://www.instagram.com/1_pot_pot" target="_blank" class="footer-link">
+        <i class="fab fa-instagram open-modal"></i>
+    </a>
+</footer>
+<div class="modal">
+  <div class="modal-content">
+    <label for="modal-toggle" class="close-btn">&times;</label>
+    <iframe src="contact.html" title="문의 폼"></iframe>
+  </div>
+</div>
+</html>
