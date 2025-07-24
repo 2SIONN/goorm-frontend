@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>폰 번호 판별기</title>
+    </head>
+    <style>
+        .wrap {
+            display: flex;
+            justify-content: center;
+        }
+        .box {
+            width: 600px;
+            height: 500px;
+            border: 1px solid black;
+            position: relative;   
+        }
+        .container {
+            padding-bottom: 10px;
+            text-align: center;
+        }
+    </style>
+    <body>
+        <div class="wrap">
+            <div class="box">
+                <div class="container">
+                    <h1>휴대폰번호 판독을 시작합니다.</h1>
+                    <label>휴대폰번호 : <input style="width: 33.3%;" type="tel" id="telInput" placeholder="휴대폰번호를 입력해주세요."></label>
+                    <button onclick="checkTelNum()">휴대폰번호 분석</button>
+                </div>
+                <div style="padding-left: 10px; margin-top: 20px; border-top: 1px dashed black;">
+                    <p>내역 확인</p>
+                    <p id="message"></p>
+                </div>
+            </div>
+        </div>
+        <script>          
+            let checkTelNum = function() {
+                const telNum = document.getElementById('telInput').value;
+                const messageLog = document.getElementById('message');
+
+                if(telNum === '') {
+                    messageLog.textContent = "이런 빈 번호는 전화를 못 걸어요.";
+                    return 0;
+                }
+
+                const onlyNum = telNum.replace(/[^0-9]/g, ""); // 숫자 정규식, 하이픈 입력 안해도 됨!
+                if(onlyNum.length !== 11) {
+                    messageLog.textContent = "이거 휴대폰 번호 맞아요?";
+                    return 0;
+                }
+  
+                if(onlyNum.length === 11) {
+                    const phoneRule = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/; // xxx-xxxx-xxxx 정규식!
+                    switch (phoneRule.test(telNum)==false) {
+                    case(telNum != onlyNum) : {
+                        messageLog.textContent = "하이픈 이상하게 입력하지 마세요.";
+                        break;
+                        }
+                    case(telNum == onlyNum) : {
+                        const reformNum = `${onlyNum.slice(0, 3)}-${onlyNum.slice(3, 7)}-${onlyNum.slice(7, 11)}`;
+                        telInput.value = reformNum;
+                        messageLog.textContent = `휴대폰 번호는 ${reformNum}입니다. 드디어 제대로 입력됐네요.`;
+                        break;
+                        }  
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
