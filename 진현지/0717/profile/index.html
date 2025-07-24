@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+    <title>진현지</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background-color:#F0F0E5;
+        }
+
+        hr{
+            color:#9C7866;
+            opacity:0.7;
+            margin:20px 0;
+            border-style: dotted;
+        }
+
+        .container{
+            display:flex;
+            max-width:1200px;
+            margin:40px auto;
+            gap:20px;
+        }
+
+        .left-box{
+            width:30%;
+            background-color:#DFC8BA;
+            border-radius:10px;
+            padding:20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .profile-img{
+            width:100%;
+            border-radius:10px;
+            overflow:hidden;
+            margin-bottom:15px;
+        }
+        
+        .profile-img img{
+            width:100%;
+            display:block;
+        }
+        
+        .name{
+            text-align:center;
+            font-size:20px;
+            font-weight:bold;
+            margin-bottom: 20px;
+            margin-top:10px;
+        }
+
+        .contact p{
+            font-size:14px;
+            margin-bottom:8px;
+        }
+
+        .skill-list, .language-list{
+            list-style:none;
+            padding:0;
+            margin:10px 0;
+        }
+
+        .skill-list li, .language-list li{
+        margin-bottom:15px;
+        }
+        
+        .skill-list li span, .language-list li span{
+            
+            display:block;
+            margin-bottom: 5px;
+            font-size:14px;
+        }
+        
+        .bar{
+            width:100%;
+            height:10px;
+            background-color:#ddd;
+            border-radius:5px;
+            overflow:hidden;
+        }
+
+        .fill{
+            height:100%;
+            background-color:#53453F;
+            border-radius:5px;
+        }
+
+
+        .right-boxes{
+            width:70%;
+            display:flex;
+            flex-direction:column;
+            gap:20px;
+        }
+
+        .right-box{
+            background-color:#DFC8BA;
+            color:#85665B;
+            border-radius:10px;
+            padding:20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .right-box h2{
+            color:#85665B;
+            margin-bottom:20px;
+        }
+        
+        .job{
+            margin-bottom:30px;        
+        }
+        .job h3{
+            font-size:18px;
+            margin-bottom: 5px;
+            color:#53453F;
+        }
+        .job .date{
+            font-size: 14px;
+            color: #9D8778;
+            margin-bottom:10px;
+        }
+        .job ul{
+            list-style:none;
+            padding-left:0;
+            font-size:14px;
+            line-height:1.6;
+            color:#333;
+        }
+
+        .school{
+            margin-bottom:20px;
+        }
+        .school h3{
+            font-size:18px;
+            color:#53453F;
+            margin-bottom:5px;
+        }
+        .school .date{
+            font-size:14px;
+            color:#9D8778;
+            margin-bottom:5px;
+        }
+
+        .school p {
+            font-size:14px;
+            color:#333;
+        }
+
+
+        .footer{
+            background-color:#BDA08B;
+            color:white;
+            text-align:center;
+            padding:20px 0;
+            margin-top:40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <!-- 왼쪽 박스 -->
+    <div class="left-box">
+      <div class="profile-img">
+        <img src="profile.jpg" alt="프로필 사진"/>
+      </div>
+      <h2 class="name">진현지 Jin HyunJi</h2>
+      <div class="contact">
+        <p><i class="fa-solid fa-user"style="margin-right: 10px;"></i>대학교 4학년</p>
+        <p><i class="fa-solid fa-house"style="margin-right: 10px;"></i>대구광역시 중구</p>
+        <p><i class="fa-solid fa-comment"style="margin-right: 10px;"></i>hyeonjij450@gmail.com</p>
+        <p><i class="fa-solid fa-phone "style="margin-right: 10px;"></i>010-4288-4925</p>
+      </div>
+      <hr>
+      <div class="skills">
+        <h3>Skills</h3>
+        <ul class="skill-list">
+            <li>
+                <span>HTML/CSS</span>
+                <div class="bar"><div class="fill" style="width:60%"></div></div>
+            </li>
+            <li>
+                <span>Javascript</span>
+                <div class="bar"><div class="fill" style="width:50%"></div></div>
+            </li>
+            <li>
+                <span>Typescript</span>
+                <div class="bar"><div class="fill" style="width:40%"></div></div>
+            </li>
+             <li>
+                <span>React</span>
+                <div class="bar"><div class="fill" style="width:40%"></div></div>
+            </li>
+        </ul>
+      </div>
+      <hr>
+      <div class="languages">
+        <h3>Languages</h3>
+        <ul class="language-list">
+            <li>
+                <span>한국어</span>
+                <div class="bar"><div class="fill" style="width: 90%"></div></div>
+            </li>
+            <li>
+                <span>영어</span>
+                <div class="bar"><div class="fill" style="width: 40%"></div></div> 
+            </li>
+            <li>
+                <span>일본어</span>
+                <div class="bar"><div class="fill" style="width: 40%"></div></div> 
+            </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 오른쪽 박스들 -->
+    <div class="right-boxes">
+      <div class="right-box">
+        <h1>Work Experience</h1>
+        <div class="job">
+            <h3> 편의점 알바</h3>
+            <p class="date">2022-2024</p>
+            <ul>
+                <li>첫 이마트 24 알바: 대략 7개월</li>
+                <li>두번째 세븐일레븐 알바: 대략 7개월</li>
+                <li>세번째 이마트 24 알바: 대략 1년</li>
+            </ul>
+      </div>
+      <div class="job">
+            <h3> 단기알바</h3>
+            <p class="date">틈틈히..</p>
+            <ul>
+                <li>야구장 짐검사</li>
+                <li>백화점 주차안내</li>
+                <li>쿠팡</li>
+                <li>abc</li>
+            </ul>
+      </div>
+      <div class="job">
+            <h3> 홀서빙알바</h3>
+            <p class="date">2024-2025</p>
+            <ul>
+                <li>이자카야</li>
+                <li>abc</li>
+                <li>abc</li>
+                <li>abc</li>
+            </ul>
+      </div>
+      </div>
+
+      <div class="right-box">
+        <h1>Education</h1>
+        <div class="school">
+            <h3>구름 부트캠프</h3>
+            <p class="date">2025-...</p>
+            <p>프론트엔드 개발자 과정</p>
+      </div>
+      <div class="school">
+            <h3>경북대학교</h3>
+            <p class="date">2022...</p>
+            <p>언제졸업할지..</p>
+      </div>
+      <div class="school">
+            <h3>경북여자고등학교</h3>
+            <p class="date">2018-2021</p>
+            <p>이과</p>
+      </div>
+    </div>
+  </div>
+
+
+
+    </div>
+
+     <footer class="footer">
+        <p>@HYUNJI JIN All rights reserved</p>
+
+    </footer>
+ 
+</body>
+</html>

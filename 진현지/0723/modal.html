@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>모달</title>
+  <style>
+    .box {
+      width: 500px;
+      height: 500px;
+      background-color:antiquewhite;
+      margin: 5px;
+      text-align: center;
+      line-height: 50px;
+    }
+
+    #load-more {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      display: none;
+    }
+
+    header {
+      height: 50px;
+      background: lightgray;
+      position: sticky;
+      top: 0;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      height: 80%;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    
+
+    .box-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="open-modal-btn">모달 열기</button>
+
+  <div class="modal" id="modal">
+    <div class="modal-content" id="modal-content">
+     <header id="page-header">헤더</header>
+      <p>이것은 모달 팝업입니다.</p>
+      <div style="height:2000px;"></div>
+      <div class="box-container" id="box-container"></div>
+      <button id="load-more">더보기</button>
+      <button id="close-modal-btn">닫기</button>
+
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const openModalBtn = document.getElementById('open-modal-btn');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+
+    const header = document.getElementById('page-header');
+    const loadMoreBtn = document.getElementById('load-more');
+    const boxContainer = document.getElementById('box-container');
+
+
+    function handleModalScroll() {
+      const scrollY = modalContent.scrollTop;
+
+      if (scrollY > 100) {
+        header.style.backgroundColor = 'tomato';
+        header.style.opacity = '0.7';
+      } else {
+        header.style.backgroundColor = 'lightgray';
+        header.style.opacity = '1';
+      }
+
+      const scrolledToBottom =
+        modalContent.scrollHeight - scrollY <= modalContent.clientHeight + 5;
+
+      loadMoreBtn.style.display = scrolledToBottom ? 'block' : 'none';
+    }
+
+
+    function handleLoadMore() {
+      const newBox = document.createElement('div');
+      newBox.classList.add('box');
+      newBox.textContent = ' 박스';
+      boxContainer.appendChild(newBox);
+    }
+
+ 
+    openModalBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      modalContent.addEventListener('scroll', handleModalScroll);
+      loadMoreBtn.addEventListener('click', handleLoadMore);
+    });
+
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+
+      modalContent.removeEventListener('scroll', handleModalScroll);
+      loadMoreBtn.removeEventListener('click', handleLoadMore);
+
+      header.style.backgroundColor = 'lightgray';
+      header.style.opacity = '1';
+
+      loadMoreBtn.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
