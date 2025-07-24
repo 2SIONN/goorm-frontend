@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slider</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: sans-serif;
+    }
+
+    .slider-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 40px auto;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    .slider-wrapper {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+        min-width: 100%;
+        height: 400px;
+        flex-shrink: 0;
+    }
+
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .slider-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        z-index: 10;
+        font-size: 20px;
+        border-radius: 4px;
+    }
+
+    .prev {
+         left: 10px;
+    }
+
+    .next {
+          right: 10px;
+    }
+
+    @media (max-width: 600px) {
+        .slide {
+            height: 250px;
+    }
+}
+</style>
+<body>
+  <div class="slider-container">
+    <div class="slider-wrapper" id="slider">
+      <div class="slide"><img src="https://img.gqkorea.co.kr/gq/2024/07/style_6698e26c148f6-1400x944.jpg"
+          alt="Slide 1" /></div>
+      <div class="slide"><img src="https://img.gqkorea.co.kr/gq/2024/07/style_6698e292d0476-1400x944.jpg"
+          alt="Slide 2" /></div>
+      <div class="slide"><img src="https://img.gqkorea.co.kr/gq/2024/07/style_6698e2ad1edeb-1400x944.jpg"
+          alt="Slide 3" /></div>
+    </div>
+    <button class="slider-button prev" onclick="prevSlide()"><</button>
+    <button class="slider-button next" onclick="nextSlide()">></button>
+  </div>    
+</body>
+<script>
+    const slider= document.getElementById('slider');
+    const slide = document.querySelectorAll('.slide');
+    const totalSlide = slide.length;
+    let currentIndex = 0;
+
+    function updateSlider(){
+        slider.style.transform=`translateX(-${currentIndex*100}%)`;
+    }
+
+    function prevSlide(){
+        currentIndex = (currentIndex - 1 + totalSlide) % totalSlide;
+        updateSlider();
+    }
+
+    function nextSlide(){
+        currentIndex = (currentIndex + 1)% totalSlide;
+        updateSlider();
+    }
+</script>
+</html>
