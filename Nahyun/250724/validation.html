@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Validation</title>
+  </head>
+  <style>
+    button {
+      margin-top: 10px;
+    }
+
+    h3 {
+      margin: 0;
+    }
+
+    input {
+      width: 200px;
+    }
+
+    .layout {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  </style>
+  <body>
+    <h3>입장 확인기</h3>
+    <div class="layout">
+      <div class="input-item">
+        <label for="nameInput">이름: </label>
+        <input type="text" id="nameInput" />
+      </div>
+
+      <div class="input-item">
+        <label for="ageInput">나이: </label>
+        <input type="text" id="ageInput" />
+      </div>
+    </div>
+    <button type="button" onclick="checkEntry()">입장 가능 여부 확인</button>
+    <p id="result"></p>
+
+    <h3>휴대폰 번호 유효성 검증</h3>
+    <div>
+      <label for="phoneNumber">휴대폰 번호: </label>
+      <input
+        type="tel"
+        id="phoneNumber"
+        placeholder="휴대폰 번호를 입력해주세요."
+      />
+      <button type="button" onclick="checkPhoneNumber()">확인</button>
+    </div>
+    <p id="phoneResult"></p>
+  </body>
+  <script>
+    function checkPhoneNumber() {
+      let phoneNumber = document.getElementById('phoneNumber').value.trim();
+      const phoneResult = document.getElementById('phoneResult');
+
+      // 조건4: 빈 값인 경우 오류 메시지 출력
+      if (phoneNumber === '') {
+        phoneResult.textContent = '⚠️ 휴대폰 번호를 입력해주세요!';
+        return;
+      }
+
+      const numbersOnly = phoneNumber.replaceAll('-', '');
+
+      if (numbersOnly.length !== 11 || isNaN(numbersOnly)) {
+        phoneResult.textContent =
+          '⚠️ 휴대폰 번호는 11자리 숫자로 입력해주세요.';
+        return;
+      }
+
+      // 조건3: 하이픈 없이 입력된 경우 하이픈 추가
+      if (!phoneNumber.includes('-')) {
+        phoneNumber =
+          numbersOnly.slice(0, 3) +
+          '-' +
+          numbersOnly.slice(3, 7) +
+          '-' +
+          numbersOnly.slice(7);
+      } else {
+        // 조건2: 하이픈이 있는 경우 3-4-4 형식 검증
+        const parts = phoneNumber.split('-');
+        if (
+          parts[0].length !== 3 ||
+          parts[1].length !== 4 ||
+          parts[2].length !== 4
+        ) {
+          phoneResult.textContent =
+            '⚠️ 3자리-4자리-4자리 형식으로 입력해주세요.';
+          return;
+        }
+      }
+
+      phoneResult.textContent = `✅ 유효한 휴대폰 번호입니다: ${phoneNumber}`;
+    }
+
+    function checkEntry() {
+      let name = document.getElementById('nameInput').value.trim();
+      let age = document.getElementById('ageInput').value.trim();
+      const result = document.getElementById('result');
+
+      // 입력값이 없을 때
+      if (name === '' || age === '') {
+        result.textContent = '이름과 나이를 입력해주세요.';
+        return;
+      }
+
+      // 이름이 number이거나, age가 string이거나, age <= 0 일 때
+      if (!isNaN(name) || isNaN(Number(age)) || Number(age) <= 0) {
+        result.textContent = '유효한 이름과 나이를 입력해주세요.';
+        return;
+      }
+
+      if (Number(age) >= 19 && name !== '') {
+        result.textContent = `환영합니다! 내년에 ${
+          Number(age) + 1
+        }살이 됩니다.`;
+      } else {
+        result.textContent = `${name}님은 미성년자입니다. 성인만 입장가능합니다.`;
+      }
+    }
+  </script>
+</html>
