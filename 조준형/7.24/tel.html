@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>입장 확인기</title>
+</head>
+
+<body>
+    <h2>입장 확인기</h2>
+
+    <label for="name">이름: </label>
+    <input type="text" id="name" />
+    <br>
+
+    <label for="age">나이: </label>
+    <input type="text" id="age" />
+    <br>
+
+    <label for="tel">전화번호: </label>
+    <input type="tel" id="tel" />
+    <br>
+
+    <button onclick="checkEntry()">입장 가능 여부 확인</button>
+    <p id="result"></p>
+
+    <script>
+        function checkEntry() {
+            const nameInput = document.getElementById('name').value.trim();
+            const ageInput = document.getElementById('age').value.trim();
+            const telInput = document.getElementById('tel').value.trim();
+            const result = document.getElementById('result');
+
+            if (!nameInput || !ageInput || !telInput) {
+                result.innerHTML = "이름, 나이, 전화번호를 모두 입력해주세요.";
+                return;
+            }
+
+            const age = Number(ageInput);
+            if (isNaN(age)) {
+                result.innerHTML = "나이는 숫자만 입력해주세요.";
+                return;
+            }
+
+            let formattedTel = "";
+
+            if (/^\d{11}$/.test(telInput)) {
+                formattedTel = telInput.slice(0, 3) + '-' + telInput.slice(3, 7) + '-' + telInput.slice(7, 11)
+
+            } else if (/^\d{3}-\d{4}-\d{4}$/.test(telInput)) {
+                formattedTel = telInput;
+            } else {
+                result.innerHTML = "전화번호는 숫자 11자리 또는 3-4-4 형식으로 입력해주세요.";
+                return;
+            }
+
+
+            if (age <= 19) {
+                result.innerHTML = "19세 이하 미성년자는 입장 불가합니다.";
+            } else {
+                result.innerHTML = `내년에 ${age + 1}살이 됩니다.<br>전화번호는 ${formattedTel}입니다.`;
+            }
+        }
+    </script>
+</body>
+
+</html>
