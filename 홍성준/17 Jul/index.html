@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+  <header class="screen-out">
+    <h1>홍성준 프로필</h1>
+  </header>
+  <div id="popup" class="overlay">
+    <a href="#" class="overlay-close"></a>
+    <section class="email-form">
+      <a href="#" class="close-btn"><i class="fa-solid fa-xmark"></i></a>
+      <header>
+        <h1>Email me!</h1>
+        <p>문의 사항을 남겨주시면 빠른 시일 내에 답변드리겠습니다.</p>
+      </header>
+      <form action="https://formspree.io/f/mvgqowob" method="post">
+        <fieldset>
+          <legend class="screen-out">이메일 폼</legend>
+          <div class="form-item">
+            <label for="username">이름</label>
+            <input type="text" name="" id="username" placeholder="이름을 입력해주세요." autocomplete="username">
+          </div>
+          <div class="form-item">
+            <label for="email">이메일</label>
+            <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." autocomplete="email">
+          </div>
+          <div class="form-item">
+            <label for="message">메시지</label>
+            <textarea name="message" id="message" placeholder="메일 내용을 입력해주세요."></textarea>
+          </div>
+          <button type="submit" name="submit" class="btn-submit">보내기</button>
+        </fieldset>
+      </form>
+    </section>
+  </div>
+  <main>
+    <section class="card profile">
+      <div class="card-content">
+        <div class="img-wrapper">
+          <img src="./images/pic.jpg" alt="증명사진">
+          <p class="name">홍성준 / HONG SEONGJOON</p>
+        </div>
+        <ul class="contact-info">
+          <li><i class="fa-solid fa-briefcase"></i>프론트엔드 개발자</li>
+          <li><i class="fa-solid fa-house"></i>서울특별시 송파구</li>
+          <li><i class="fa-solid fa-envelope"></i><a
+              href="mailto:seongjoonhong99@gmail.com">seongjoonhong99@gmail.com</a></li>
+          <li><i class="fa-solid fa-phone"></i>010-3518-9911</li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <h3><i class="fa-solid fa-gear"></i>Skills</h3>
+        <div class="content-item">
+          <p>HTML/CSS</p>
+          <div class="bar-wrapper">
+            <div class="empty-bar"></div>
+            <div class="color-bar percent-80">80%</div>
+          </div>
+        </div>
+        <div class="content-item">
+          <p>JavaScript</p>
+          <div class="bar-wrapper">
+            <div class="empty-bar"></div>
+            <div class="color-bar percent-85">85%</div>
+          </div>
+        </div>
+        <div class="content-item">
+          <p>TypeScript</p>
+          <div class="bar-wrapper">
+            <div class="empty-bar"></div>
+            <div class="color-bar percent-60">60%</div>
+          </div>
+        </div>
+        <div class="content-item">
+          <p>React</p>
+          <div class="bar-wrapper">
+            <div class="empty-bar"></div>
+            <div class="color-bar percent-70">70%</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <h3><i class="fa-solid fa-globe"></i>Languages</h3>
+        <div class="content-item">
+          <p>Korean</p>
+          <div class="bar-wrapper">
+            <div class="empty-bar"></div>
+            <div class="color-bar percent-100">100%</div>
+          </div>
+        </div>
+        <div class="content-item">
+          <p>English</p>
+          <div class="bar-wrapper">
+            <div class="empty-bar"></div>
+            <div class="color-bar percent-85">85%</div>
+          </div>
+        </div>
+        <div class="content-item">
+          <p>Vietnamese</p>
+          <div class="bar-wrapper">
+            <div class="empty-bar"></div>
+            <div class="color-bar percent-40">40%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="card-wrapper">
+      <section class="card">
+        <h1 class="section-title"><i class="fa-solid fa-briefcase"></i>&nbsp;Experience</h1>
+        <div class="card-content">
+          <h3>Front End Developer / LightVision inc.</h3>
+          <p><i class="fa-solid fa-calendar"></i>Nov 2024 - Feb 2025</p>
+          <ul>
+            <li><span>컴포넌트 개발</span></li>
+            <li><span>검색 자동 완성 및 반응형 UI 구현</span></li>
+            <li><span>구독 결제 UI 기획</span></li>
+            <li><span>사용기술: React, TypeScript</span></li>
+          </ul>
+        </div>
+      </section>
+      <section class="card">
+        <h1 class="section-title"><i class="fa-solid fa-cubes"></i>&nbsp;Project</h1>
+        <div class="card-content">
+          <h3>To Do Web App</h3>
+          <img src="./images/todo.png" alt="Todo Web App Image" class="project-image">
+          <p><i class="fa-solid fa-calendar"></i>Jan 2025 - Apr 2025</p>
+          <ul>
+            <li><span>컴포넌트 개발</span></li>
+            <li><span>회원가입/일정 관리 기능 개발</span></li>
+            <li><span>백엔드/DB 설계</span></li>
+            <li><span>사용기술: React, TypeScript, Node.js</span></li>
+          </ul>
+        </div>
+        <div class="card-content">
+          <h3>BPMN Modeling Web Tool</h3>
+          <img src="./images/bpmn.png" alt="BPMN Image" class="project-image">
+          <p><i class="fa-solid fa-calendar"></i>Mar 2024 - Sep 2024</p>
+          <ul>
+            <li><span>컴포넌트 개발</span></li>
+            <li><span>다이어그램 모델러/뷰어 구현</span></li>
+            <li><span>노드 별 파일 첨부 기능 개발</span></li>
+            <li><span>사용기술: React, JavaScript</span></li>
+          </ul>
+        </div>
+        <div class="card-content">
+          <h3>Media Alert Web</h3>
+          <img src="./images/media.png" alt="Media Alert Web Image" class="project-image">
+          <p><i class="fa-solid fa-calendar"></i>Mar 2020 - May 2020</p>
+          <ul>
+            <li><span>컴포넌트 개발</span></li>
+            <li><span>API 데이터 렌더링</span></li>
+            <li><span>구독 콘텐츠 이메일 알림 도입</span></li>
+            <li><span>사용기술: React, JavaScript, Firebase</span></li>
+          </ul>
+        </div>
+      </section>
+      <section class="card">
+        <h1 class="section-title"><i class="fa-solid fa-user-graduate"></i>&nbsp;Education</h1>
+        <div class="card-content">
+          <h3>구름 부트캠프</h3>
+          <p><i class="fa-solid fa-calendar"></i>Jul 2025 - Jan 2026</p>
+          <p>프론트엔드 개발자 과정</p>
+        </div>
+        <div class="card-content">
+          <h3>RMIT University</h3>
+          <p><i class="fa-solid fa-calendar"></i>Feb 2018 - Oct 2024</p>
+          <p>Bachelor of Information Technology (IT)</p>
+        </div>
+        <div class="card-content">
+          <h3>하노이 한국 국제학교</h3>
+          <p><i class="fa-solid fa-calendar"></i>Mar 2015 - Jan 2018</p>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer>
+    <p>Find me on social media.</p>
+    <ul>
+      <li><a href="https://www.facebook.com/profile.php?id=100008141106316" target="_blank"><i class="fa-brands fa-square-facebook"></i></a></li>
+      <li><a href="https://www.instagram.com/tjdwns99" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+      <li><a href="https://www.linkedin.com/in/seongjoon-hong-193a742b9/" target="_blank"><i
+            class="fa-brands fa-linkedin"></i></a></li>
+      <li><a href="https://github.com/tjdwns1904" target="_blank"><i class="fa-brands fa-square-github"></i></a></li>
+      <li><a href="#popup"><i class="fa-solid fa-envelope"></i></a></li>
+    </ul>
+    <p><i class="fa-regular fa-copyright"></i>2025 SEONGJOON HONG All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
