@@ -3,6 +3,6 @@
 ## References
 
 ### HTML
-- [HTML 공식문서](https://html.spec.whatwg.org/)
-- [CSS 공식문서 및 업데이트 현황](https://www.w3.org/Style/CSS/Overview.en.html)
+- [HTML 공식문서 (https://html.spec.whatwg.org/)](https://html.spec.whatwg.org/)
+- [CSS 공식문서 및 업데이트 현황 (https://www.w3.org/Style/CSS/Overview.en.html)](https://www.w3.org/Style/CSS/Overview.en.html)
 
