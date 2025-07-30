@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>회원가입 유효성 검사</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        padding: 40px;
+        max-width: 400px;
+        margin: auto;
+      }
+
+      input {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-size: 16px;
+      }
+
+      .message {
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+
+      .success {
+        color: green;
+      }
+
+      .error {
+        color: red;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 10px;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>회원가입</h2>
+
+    <label for="email">이메일</label>
+    <input type="email" id="email" placeholder="example@email.com" />
+    <div id="emailMessage" class="message"></div>
+
+    <label for="password">비밀번호</label>
+    <input
+      type="password"
+      id="password"
+      placeholder="8자 이상, 특수문자 포함"
+    />
+    <div id="passwordMessage" class="message"></div>
+
+    <button onclick="validateForm()">가입하기</button>
+    <div id="submitMessage" class="message"></div>
+  </body>
+  <script>
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const emailMessage = document.getElementById('emailMessage');
+    const passwordMessage = document.getElementById('passwordMessage');
+
+    function validateForm() {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+      const submitMessage = document.getElementById('submitMessage');
+      let isValid = true;
+
+      if (!email) {
+        emailMessage.textContent = '이메일을 입력해주세요.';
+        emailMessage.className = 'message error';
+        isValid = false;
+      }
+
+      if (!password) {
+        passwordMessage.textContent = '비밀번호를 입력해주세요.';
+        passwordMessage.className = 'message error';
+        isValid = false;
+      }
+
+      if (isValid) {
+        submitMessage.textContent = '회원가입이 완료되었습니다!';
+        submitMessage.className = 'message success';
+      } else {
+        submitMessage.textContent = '';
+      }
+    }
+
+    function validateEmail(email) {
+      const emailRegex = /^[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,}$/;
+
+      return emailRegex.test(email);
+    }
+
+    function validatePassword(password) {
+      const hasMinLength = password.length >= 8;
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+      return hasMinLength && hasSpecialChar;
+    }
+
+    emailInput.addEventListener('input', () => {
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        emailMessage.textContent = '이메일을 입력해주세요.';
+        emailMessage.className = 'message error';
+      } else if (!validateEmail(email)) {
+        emailMessage.textContent = '올바른 이메일 형식이 아닙니다.';
+        emailMessage.className = 'message error';
+      } else {
+        emailMessage.textContent = '올바른 이메일입니다.';
+        emailMessage.className = 'message success';
+      }
+    });
+
+    passwordInput.addEventListener('input', () => {
+      const password = passwordInput.value.trim();
+
+      if (!password) {
+        passwordMessage.textContent = '비밀번호를 입력해주세요.';
+        passwordMessage.className = 'message error';
+      } else if (!validatePassword(password)) {
+        passwordMessage.textContent =
+          '비밀번호는 8자 이상이며 특수문자를 포함해야 합니다.';
+        passwordMessage.className = 'message error';
+      } else {
+        passwordMessage.textContent = '올바른 비밀번호입니다.';
+        passwordMessage.className = 'message success';
+      }
+    });
+  </script>
+</html>
