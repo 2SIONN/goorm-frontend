@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .modal {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+    }
+
+    .modal.dimmed {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 5px 10px;
+    }
+
+    .modal-content.alert {
+      position: absolute;
+    }
+
+    .modal-content.fullpage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .modal-content.animation {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
+    }
+
+    .modal-content.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .modal-content.fullscreen {
+      width: 100%;
+      height: 100%;
+    }
+
+    .modal-content.lg {
+      width: 75%;
+      height: 75%;
+    }
+
+    .modal-content.md {
+      width: 60%;
+      height: 60%;
+    }
+
+    .modal-content.sm {
+      width: 40%;
+      height: 40%;
+    }
+
+    .modal-content.center {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .modal-content.bottom {
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .modal-content.top {
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .modal-content .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 30px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+  <title>Modal</title>
+</head>
+
+<body>
+  <button onclick="new Modal('#modal-root')">모달 열기</button>
+  <button onclick="new Modal('#modal-root', {
+    type: 'alert',
+    dimmed: true,
+    size: 'md',
+    closable: false,
+    clickToClose: true,
+    animation: true,
+    position: 'top'})">탑 모달 열기</button>
+  <button onclick="new Modal('#modal-root', {
+    type: 'alert',
+    dimmed: true,
+    size: 'md',
+    closable: true,
+    clickToClose: false,
+    animation: true,
+    position: 'top'})">X 없는 모달 열기</button>
+  <button onclick="new Modal('#modal-root', {
+    type: 'fullpage',
+    dimmed: false,
+    size: 'md',
+    closable: true,
+    clickToClose: true,
+    animation: true,
+    position: 'top'})">풀페이지 모달 열기</button>
+  <button onclick="new Modal('#modal-root', {
+    type: 'alert',
+    dimmed: true,
+    size: 'sm',
+    closable: true,
+    clickToClose: true,
+    animation: true,
+    position: 'bottom'})">바텀 모달 열기</button>
+  <button onclick="new Modal('#modal-root', {
+    type: 'alert',
+    dimmed: true,
+    size: 'lg',
+    closable: true,
+    clickToClose: true,
+    animation: true,
+    position: 'center'})">큰 모달 열기</button>
+  <div id="modal-root" class="modal hidden"></div>
+</body>
+<script>
+  function Modal(selector, options = {
+    type: 'alert',
+    dimmed: true,
+    size: 'md',
+    closable: true,
+    clickToClose: true,
+    animation: true,
+    position: 'center'
+  }) {
+    const { type, dimmed, size, closable, clickToClose, animation, position } = options;
+    this.selector = selector;
+    this.type = type;
+    this.dimmed = dimmed;
+    this.size = size;
+    this.closable = closable;
+    this.clickToClose = clickToClose;
+    this.animation = animation;
+    this.position = position;
+
+    this.open();
+  }
+
+  Modal.prototype.open = function () {
+    this.modalContainer = document.querySelector(this.selector);
+    if (!this.modalContainer) {
+      throw new Error("There's no such element");
+    }
+    this.modalContainer.classList.remove('hidden');
+    this.modal = document.createElement('div');
+    this.modal.className = `modal-content ${this.type} ${this.animation && 'animation'} show`;
+    if (this.type === 'alert') {
+      this.modal.classList.add(this.size);
+      this.modal.classList.add(this.position);
+      if (this.dimmed) {
+        this.modalContainer.classList.add('dimmed');
+        if (this.closable) {
+          this.modalContainer.addEventListener('click', (e) => {
+            if (e.target.id === 'modal-root') this.close();
+          });
+        }
+      }
+    }
+    this.modal.innerHTML = `
+        <h1>모달</h1>
+        <hr >
+        <p>모달 힘들다</p>
+      `;
+    if (this.clickToClose) {
+      const closeBtn = document.createElement('span');
+      closeBtn.textContent = CLOSE_ICON;
+      closeBtn.className = 'close-btn';
+      closeBtn.addEventListener('click', () => {
+        this.close();
+      });
+      this.modal.appendChild(closeBtn);
+    }
+    this.modalContainer.appendChild(this.modal);
+  }
+
+  Modal.prototype.close = function () {
+    this.modal.classList.remove('show');
+    if (this.animation) {
+      this.modal.addEventListener('transitionend', () => {
+        this.modal.remove();
+        this.modalContainer.classList.add('hidden');
+      });
+    } else {
+      this.modal.remove();
+      this.modalContainer.classList.add('hidden');
+    }
+
+  }
+
+  const CLOSE_ICON = '❌';
+</script>
+
+</html>
