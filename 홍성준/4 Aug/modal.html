@@ -25,6 +25,8 @@
     .modal-content {
       background-color: white;
       padding: 5px 10px;
+      opacity: 0;
+      transform: translateY(-20px);
     }
 
     .modal-content.alert {
@@ -40,8 +42,6 @@
     }
 
     .modal-content.animation {
-      opacity: 0;
-      transform: translateY(-20px);
       transition: all 0.3s ease;
     }
 
@@ -143,7 +143,7 @@
     size: 'lg',
     closable: true,
     clickToClose: true,
-    animation: true,
+    animation: false,
     position: 'center'})">큰 모달 열기</button>
   <div id="modal-root" class="modal hidden"></div>
 </body>
@@ -175,18 +175,22 @@
     if (!this.modalContainer) {
       throw new Error("There's no such element");
     }
+
     this.modalContainer.classList.remove('hidden');
     this.modal = document.createElement('div');
-    this.modal.className = `modal-content ${this.type} ${this.animation && 'animation'} show`;
+    this.modal.className = `modal-content ${this.type} ${this.animation ? 'animation' : ''} show`;
     if (this.type === 'alert') {
       this.modal.classList.add(this.size);
       this.modal.classList.add(this.position);
       if (this.dimmed) {
         this.modalContainer.classList.add('dimmed');
         if (this.closable) {
-          this.modalContainer.addEventListener('click', (e) => {
-            if (e.target.id === 'modal-root') this.close();
-          });
+          this._handleOutsideClick = (e) => {
+            if (e.target === this.modalContainer) {
+              this.close();
+            }
+          };
+          this.modalContainer.addEventListener('click', this._handleOutsideClick);
         }
       }
     }
@@ -209,12 +213,15 @@
 
   Modal.prototype.close = function () {
     this.modal.classList.remove('show');
+    this._handleOutsideClick && this.modalContainer.removeEventListener('click', this._handleOutsideClick);
     if (this.animation) {
+      console.log(this);
       this.modal.addEventListener('transitionend', () => {
         this.modal.remove();
         this.modalContainer.classList.add('hidden');
       });
     } else {
+      console.log(this);
       this.modal.remove();
       this.modalContainer.classList.add('hidden');
     }
