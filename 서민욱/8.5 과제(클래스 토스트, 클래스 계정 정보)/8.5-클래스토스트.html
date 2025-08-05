@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>버튼 공장</title>
+        <style>
+            .toast-container {
+                position: fixed;
+                z-index: 9999;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .toast-container.top-right {
+                top: 20px;
+                right: 20px;
+                align-items: flex-end;
+            }
+
+            .toast-container.bottom-right {
+                bottom: 20px;
+                right: 20px;
+                align-items: flex-end;
+            }
+
+            .toast-container.top-left {
+                top: 20px;
+                left: 20px;
+                align-items: flex-start;
+            }
+
+            .toast-container.bottom-left {
+                bottom: 20px;
+                left: 20px;
+                align-items: flex-start;
+            }
+
+            .toast-container.center {
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                align-items: center;
+            }
+
+            .toast {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                min-width: 200px;
+                max-width: 300px;
+                background-color: #444;
+                color: white;
+                padding: 12px 18px;
+                border-radius: 6px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all 0.3s ease;
+                position: relative;
+                font-family: sans-serif;
+            }
+
+            .toast.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .toast .icon {
+                font-size: 18px;
+            }
+
+            .toast .close {
+                position: absolute;
+                top: 8px;
+                right: 10px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+
+            /* 상태별 색상 */
+            .toast.success {
+                background-color: #2ecc71;
+            }
+
+            .toast.error {
+                background-color: #e74c3c;
+            }
+
+            .toast.warning {
+                background-color: #f39c12;
+            }
+
+            .toast.info {
+                background-color: #3498db;
+            }
+        </style>
+    </head>
+    <body>
+        <button onclick="new Toast2('저장 완료', { type: 'success', duration: 3000, position:'center' })">success 토스트 띄우기</button>
+        <button onclick="new Toast2('에러 발생', { type: 'error', duration: 3000, position:'bottom-right' })">error 토스트 띄우기</button>
+        <button onclick="new Toast2('경고', { type: 'warning', duration: 3000, position:'bottom-left' })">warning 토스트 띄우기</button>
+        <button onclick="new Toast2('정보', { type: 'info', duration: 3000, position:'top-right' })">info 토스트 띄우기</button>
+
+        <script>
+            class Toast2{
+                constructor(message, option = {}) {
+                    this.message = message;
+                    this.type = option.type;
+                    this.duration = option.duration;
+                    this.position = option.position;
+
+                    this._createToast();
+                }
+                _createToast() {
+                    const toastContainer = `.toast-container.${this.position}`; // 일단 토스트 생성 위치부터 설정합시다.
+                    let container = document.querySelector(toastContainer); // 이제 이걸 만들기 위해 변수저장해요.
+
+                    if(!container) { // 어 근데 컨테이너가 없누? 그럼 먼저 만들어야지
+                        container = document.createElement('div'); // 일단 div부터 만들어유
+                        container.classList.add('toast-container'); // 여기에 클래스 입히죠
+                        container.classList.add(this.position); // 그리고 클래스에서도 위치따지니까 이건 필요하겠죠?
+                        document.body.appendChild(container); // 이제 컨테이너가 만들어졌어요
+                    }
+                
+                    // 이제 토스트를 만들어보죠
+                    const toast = document.createElement('div'); // 얘도 div부터 만들어유
+                    toast.classList.add('toast'); // 여기에 클래스 입히죠
+                    toast.classList.add(this.type); // 얘도 type에 따라 토스트가 달라야하겠죠?
+                    toast.innerHTML = `
+                        <span class="icon">${this._toastIcon(this.type)}</span>
+                        <span class="message">${this.message}</span>
+                        <button class="close">×</button> 
+                        `; // innerHTML 속성으로 조건 4의 구성 요소 구조를 만족 시킬 거에유
+
+                    container.appendChild(toast); // 이제 컨테이너 안에 토스트가 들어가겠죠?
+                    this.timeset = setTimeout(() => { // setTimeout() 써서 자연스럽게 트랜지션 동작하게 합시다.
+                        toast.classList.add('show'); // opacity 바꿔줍니다.
+                    }, 0);
+
+                    toast.querySelector('.close').addEventListener('click', () => { // 수동으로 끄기
+                        this._removeToast(toast); // 클릭하면 removeToast 실행됩니다.
+                    });
+
+                    this.timeout = setTimeout(() => { // setTimeout()써서 자동으로 끄게 합시다.
+                        this._removeToast(toast);
+                    }, this.duration); // 토스트의 duration 값에 따라 시간이 지난 후 removeToast가 실행됩니다.
+                }
+                _removeToast(toastExit) {
+                    toastExit.classList.remove('show'); // 일단 opacity 부터 없애고
+                    toastExit.addEventListener('transitionend', () => { //트랜지션으로 opacity 바뀌면 실행됨.
+                    if (toastExit.parentNode) { // container가 이 함수에 정의가 안되있으므로 parentNode로 설정.
+                        // 만약 토스트가 없는데 removeChild가 작동하면 오류남! 여부봐야됨!
+                        toastExit.parentNode.removeChild(toastExit); // 토스트 div 없애버립시다.
+                        }
+                    });
+                }
+                _toastIcon(type) { // 얘도 프로토타입으로 만들어서 하는게 편해요. 
+                    const icons = {
+                    success: '✅',
+                    error: '❌',
+                    warning: '⚠️',
+                    info: 'ℹ️',
+                    };
+                return icons[type]; // 동적인 속성은 .이 아니라 []를 통해 접근해야함!
+                };
+            }
+            
+        </script>
+    </body>
+</html>
