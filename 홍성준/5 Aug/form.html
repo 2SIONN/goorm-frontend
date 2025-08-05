@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    input {
+      padding: 8px 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .container {
+      width: fit-content;
+      padding: 15px 20px;
+      margin: 0 auto;
+      border: 1px solid #e2e2e2;
+      border-radius: 5px;
+    }
+
+    .form-container {
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+  <title>Form</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h2>👤 사용자 생성</h2>
+      <input type="text" id="username" name="username" placeholder="이름을 입력하세요.">
+      <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요.">
+      <button id="register-btn">생성하기</button>
+    </div>
+    <div class="form-container">
+      <h2>🔐 비밀번호 확인</h2>
+      <input type="password" name="checkPw" id="checkPw" placeholder="비밀번호를 입력하세요.">
+      <button id="check-btn">비밀번호 확인</button>
+    </div>
+    <div class="form-container">
+      <h2>📊 전체 사용자 수 확인</h2>
+      <button id="count-btn">사용자 수 확인</button>
+    </div>
+    <p id="text-container" class="hidden"></p>
+  </div>
+</body>
+<script>
+  class User {
+    static #NAME_MIN_LENGTH = 2;
+    static #PW_MIN_LENGTH = 6;
+    static count = 0;
+    #password;
+    constructor(name, password) {
+      this.name = name;
+      this.password = password;
+      showSuccess("생성을 축하합니다.");
+      User.count++;
+    }
+
+    get name() {
+      return this._name.toUpperCase();
+    }
+
+    set name(value) {
+      if (value.length < User.#NAME_MIN_LENGTH) {
+        throw new Error("이름은 두 글자 이상이어야 합니다.");
+      } else this._name = value;
+    }
+
+    set password(value) {
+      if (value.length < User.#PW_MIN_LENGTH) {
+        throw new Error("비밀번호는 여섯 글자 이상이어야 합니다.");
+      } else this.#password = value;
+    }
+
+    checkPassword(inputPw) {
+      if (inputPw === this.#password) {
+        showSuccess("비밀번호가 일치합니다.");
+        return true;
+      }
+      showError("비밀번호가 일치하지 않습니다.");
+      return false;
+    }
+
+    static getCount() {
+      return User.count;
+    }
+  }
+
+  const p = document.querySelector('#text-container');
+  const registerBtn = document.querySelector('#register-btn');
+  const checkBtn = document.querySelector('#check-btn');
+  const countBtn = document.querySelector('#count-btn');
+  let user;
+
+  function showSuccess(text) {
+    p.classList.remove('hidden');
+    !p.classList.contains('success') && p.classList.add('success');
+    p.classList.contains('error') && p.classList.remove('error');
+    p.textContent = text;
+  }
+
+  function showError(text) {
+    p.classList.remove('hidden');
+    p.classList.contains('success') && p.classList.remove('success');
+    !p.classList.contains('error') && p.classList.add('error');
+    p.textContent = text;
+  }
+
+  registerBtn.addEventListener('click', () => {
+    const username = document.querySelector('#username').value;
+    const pw = document.querySelector('#password').value;
+    try {
+      user = new User(username, pw);
+    }catch(e){
+      showError(e.message);
+    }
+    
+  });
+  checkBtn.addEventListener('click', () => {
+    const inputPw = document.querySelector('#checkPw').value;
+    if (user) {
+      user.checkPassword(inputPw);
+    }
+  })
+  countBtn.addEventListener('click', () => {
+    showSuccess(`사용자 수는 ${User.getCount()}명입니다.`);
+  });
+</script>
+
+</html>
