@@ -25,40 +25,40 @@
 </body>
 <script>
   document.querySelector('#submit-btn').addEventListener('click', () => {
-    // checkValidity();
-    checkNumber();
+    checkValidity();
+    // checkNumber();
   });
-
-  function checkValidity() {
-    const LENGTH = 13;
-    const phone = document.getElementById('phone').value;
-    const msgContainer = document.getElementById('msg-container');
-    if (phone !== '') {
-      const { newNumber: phoneNum, isDigits } = getFormattedNumber(phone);
-      if (!isDigits || phoneNum.length !== LENGTH) {
-        msgContainer.innerHTML = '유효한 번호를 입력해주세요';
-      } else {
-        msgContainer.innerHTML = `당신의 전화번호는 ${phoneNum}입니다.`;
-      }
-    } else {
-      msgContainer.innerHTML = '전화번호를 입력해주세요';
-    }
-  }
 
   function getFormattedNumber(phone) {
     let newPhone = [];
     let isDigits = true;
     for (let i = 0; i < phone.length; i++) {
       let n = phone[i];
-      if (isNaN(n) && n !== '-' && i !== 3 && i !== 7) {
-        isDigits = false;
-        break;
-      } else if (!isNaN(n)) {
+      if (!isNaN(n)) {
         newPhone.push(n);
+      } else if (n !== '-' || (i !== 3 && i !== 8)) {
+        return '';
       }
     }
     if (isDigits) newPhone = newPhone.slice(0, 3).join('') + '-' + newPhone.slice(3, 7).join('') + '-' + newPhone.slice(7).join('');
-    return { newNumber: typeof newPhone === 'string' ? newPhone : newPhone.join(''), isDigits };
+    return newPhone;
+  }
+
+  function checkValidity() {
+    const LENGTH = 13;
+    const phone = document.getElementById('phone').value;
+    const msgContainer = document.getElementById('msg-container');
+    if (phone !== '') {
+      const phoneNum = getFormattedNumber(phone);
+      if (!phoneNum || phoneNum.length !== LENGTH) {
+        msgContainer.innerHTML = '유효한 번호를 입력해주세요';
+      } else {
+        msgContainer.innerHTML = `당신의 전화번호는 ${phoneNum}입니다.`;
+        document.getElementById('phone').value = phoneNum;
+      }
+    } else {
+      msgContainer.innerHTML = '전화번호를 입력해주세요';
+    }
   }
 
   function checkNumber() {
@@ -80,6 +80,7 @@
     if (digits.length === LENGTH) {
       const newDigits = digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
       msgContainer.innerHTML = `전화번호는 ${newDigits}입니다.`;
+      document.getElementById('phone').value = newDigits;
     } else {
       msgContainer.innerHTML = '유효한 전화번호를 입력해주세요.';
     }
