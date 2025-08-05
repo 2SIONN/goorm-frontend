@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전번 확인기</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    input {
+      margin-bottom: 5px;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h2><i class="fa-solid fa-user-tie"></i> 전화번호 확인기</h2>
+  <div>
+    <label for="phone">전화번호</label>
+    <input type="tel" id="phone">
+  </div>
+  <button type="button" id="submit-btn">확인</button>
+  <p id="msg-container"></p>
+</body>
+<script>
+  document.querySelector('#submit-btn').addEventListener('click', () => {
+    checkValidity();
+    // checkNumber();
+  });
+
+  function getFormattedNumber(phone) {
+    let newPhone = [];
+    let isDigits = true;
+    for (let i = 0; i < phone.length; i++) {
+      let n = phone[i];
+      if (!isNaN(n)) {
+        newPhone.push(n);
+      } else if (n !== '-' || (i !== 3 && i !== 8)) {
+        return '';
+      }
+    }
+    if (isDigits) newPhone = newPhone.slice(0, 3).join('') + '-' + newPhone.slice(3, 7).join('') + '-' + newPhone.slice(7).join('');
+    return newPhone;
+  }
+
+  function checkValidity() {
+    const LENGTH = 13;
+    const phone = document.getElementById('phone').value;
+    const msgContainer = document.getElementById('msg-container');
+    if (phone !== '') {
+      const phoneNum = getFormattedNumber(phone);
+      if (!phoneNum || phoneNum.length !== LENGTH) {
+        msgContainer.innerHTML = '유효한 번호를 입력해주세요';
+      } else {
+        msgContainer.innerHTML = `당신의 전화번호는 ${phoneNum}입니다.`;
+        document.getElementById('phone').value = phoneNum;
+      }
+    } else {
+      msgContainer.innerHTML = '전화번호를 입력해주세요';
+    }
+  }
+
+  function checkNumber() {
+    const LENGTH = 11;
+    const phone = document.getElementById('phone').value;
+    const msgContainer = document.getElementById('msg-container');
+    if (phone === '') {
+      msgContainer.innerHTML = '전화번호를 입력해주세요.';
+      return;
+    }
+    const digitSet = phone.split('-');
+    if (phone.includes('-')) {
+      if (digitSet.length !== 3 || (digitSet[0].length !== 3 || digitSet[1].length !== 4 || digitSet[2].length !== 4)) {
+        msgContainer.innerHTML = '3자리-4자리-4자리에 맞춰서 작성해주세요.';
+        return;
+      }
+    }
+    const digits = digitSet.join('');
+    if (digits.length === LENGTH) {
+      const newDigits = digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
+      msgContainer.innerHTML = `전화번호는 ${newDigits}입니다.`;
+      document.getElementById('phone').value = newDigits;
+    } else {
+      msgContainer.innerHTML = '유효한 전화번호를 입력해주세요.';
+    }
+  }
+</script>
+
+</html>

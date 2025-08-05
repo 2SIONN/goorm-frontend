@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+            
+            .nameCont {
+                display: flex;
+                flex-direction: column;
+            }
+        </style>
+    </head>
+    <body>
+        <p>입장 확인기</p>
+        <div class="nameCont">
+            <label>이름 : <input type="text" id="nameInput" placeholder="이름을 입력해주세요."></label>
+            <label>나이 : <input type="number" id="ageInput" placeholder="나이를 입력해주세요."></label>
+            <br> 
+        </div>
+        <button onclick="checkEntry()">입장</button>
+        <p id="result"></p>
+    </body>
+    <script>
+        function checkEntry() {
+            let name = document.getElementById('nameInput').value;
+            let age = document.getElementById('ageInput').value;
+
+            const result = document.getElementById('result');
+
+            if (name == "" ) {
+                result.textContent = "이름이 없으시진 않을 거 아니에요.";
+            } else if (age <= 0) {
+                result.textContent = "나이가 이 따위인 사람은 없습니다.";
+            } else if (age >= 20 && name != "") {
+                result.textContent = `20세 이상이시네요, 술 한잔 하시겠습니까? ${Number(age) + 1}세가 되기 전에.`;
+                }
+            else {
+                result.textContent = `${age}세 시네요, 아직 응애입니다. ${20 - Number(age)}년 후에 다시오세요.`;
+            }
+        }
+    </script>
+</html>
