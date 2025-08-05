@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTf-8">
+    <title>클래스를 이용한 모달</title>
+</head>
+<style>
+    button{
+        width:100px;
+        height:50px;
+        font-size:20px;
+    }
+    .fruit{
+        background-color: aquamarine;
+    }
+</style>
+<body>
+    <button onclick = "new Fruit(message, type)">과일 버튼</button>
+    <div class="fruit"></div>
+</body>
+<script>
+    class Fruit{
+        constructor(message, type){
+            this.message = message;
+            this.type = type;
+            this.create();
+        }
+        create(){
+            let fruit = document.querySelector('.fruit');
+            const infruit = document.createElement('div');
+            infruit.className = `fruit ${this.type}`;
+            infruit.innerHTML = `
+                <div class = "message">${this.message}</div>`;
+            fruit.appendChild(infruit);
+        }
+    }
+
+    const fruit1 = new Fruit('딸기', 'strawberry');
+</script>
+</html>
