@@ -11,15 +11,37 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    h1{
+        margin:10px 10px;
+    }
+    div{
+        margin: 10px 10px;
+        display:flex;
+    }
+    p{
+        margin:10px 10px;
     }
 
 </style>
 <body>
-    <label for="name">이름: </label>
-    <input type="text" id="name" name="name" placeholder="이름을 입력해주세요.">
-    <label for="age">나이: </label>
-    <input type="number" id="age" name="age" placeholder="숫자로 입력">
-    <button id="button">입장 가능 여부 확인</button>
+    <div>
+        <label for="name">이름:  </label>
+        <input type="text" id="name" name="name" placeholder="이름을 입력해주세요.">
+    </div>
+    <div>
+        <label for="age">나이:  </label>
+        <input type="number" id="age" name="age" placeholder="숫자로 입력">
+    </div>
+    <div>
+        <label for="tel">전화번호:  </label>
+        <input type="tel" id="tel" name="tel" placeholder="000-0000-0000">
+    </div>
+    <div>   
+        <button id="button">입장 가능 여부 확인</button>
+    </div>
+    
     <p id="result"></p>
 </body>
 <script>
@@ -27,8 +49,20 @@
     button.addEventListener('click', ()=>{
         const name = document.getElementById('name').value;
         const age = parseInt(document.getElementById('age').value);
+        let tel = document.getElementById('tel').value.replace(/\D/g, '');
         if(typeof name !=="string" || isNaN(age)){
             document.getElementById('result').textContent = '이름과 나이를 정확하게 입력해주세요.';
+            return;
+        }
+        if(!tel){
+            result.textContent = '전화번호를 입력해주세요.';
+            return;
+        }
+        if(tel.length === 11){
+            tel = tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+            document.getElementById('tel').value = tel;
+        } else {
+            result.textContent = '전화번호는 3자리-4자리-4자리 형식으로 입력해야 합니다.';
             return;
         }
         if(age>=20){
