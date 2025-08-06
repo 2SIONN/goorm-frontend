@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MBTI 검사</title>
+    <style>
+        body {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 20px;
+        }
+
+        h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        }
+
+        .question {
+        background: #f9f9f9;
+        padding: 20px;
+        margin-bottom: 25px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        }
+
+        .question p {
+        font-size: 18px;
+        margin-bottom: 15px;
+        }
+
+        .options {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        }
+
+        .option {
+        display: inline-block;
+        }
+
+        input[type="radio"] {
+        display: none;
+        }
+
+        label {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #a957c2;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        user-select: none;
+        }
+
+        input[type="radio"]:checked+label {
+        background-color: #e03f65;
+        }
+
+        #result {
+        margin: 40px 0;
+        font-size: 20px;
+        text-align: center;
+        font-weight: bold;
+        }
+  </style>
+</head>
+
+<body>
+
+  <h1>🧠 MBTI 간단 검사</h1>
+  <div id="result"></div>
+  <div id="quiz"></div>
+
+  <script>
+    const questions = {
+      q1: { text: "친구가 갑자기 나와서 보자 해도 상관 없나요?", a: "E", b: "I" },  // EI
+      q2: { text: "어떠한 물체를 보면 여러 가지 생각를 하나요?", a: "N", b: "S" },   // NS
+      q3: { text: "이성이 감정보다 먼저 앞서는 편인가요?", a: "T", b: "F" },        // TF
+      q4: { text: "평소에 계획을 잘 짜는 편인가요?", a: "J", b: "P" }     // JP
+    };
+
+    const answers = {}; // 사용자의 응답을 저장할 객체
+
+    // 각 MBTI 항목 선택 시 점수 증가 (항목이 많아질 경우 유용!)
+    const score = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+    const quizEl = document.getElementById("quiz");
+    const resultEl = document.getElementById("result");
+
+    const renderQuestions = function() {
+        Object.entries(questions).forEach(([key, value], index) => {
+            const container = document.createElement("div");
+            container.className = "question";
+            container.innerHTML = `
+                <p>${index + 1}. ${value.text}</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="${key}_a" name="${key}" value="${value.a}">
+                        <label for="${key}_a">네</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="${key}_b" name="${key}" value="${value.b}">
+                        <label for="${key}_b">아니오</label>
+                    </div>
+                </div>
+                `;
+            quizEl.appendChild(container);
+
+            container.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    answers[key] = input.value;
+
+                    if (Object.keys(answers).length == Object.keys(questions).length) {
+                        showResult(); // 서로의 key 개수 비교 후 같으면, 다 한거니까 결과 보여주기.
+                    }
+                    
+                });
+            });
+        });
+    }
+
+    const showResult = function() {
+        Object.values(answers).forEach(type => {
+            score[type]++;
+        });
+        const entries = Object.entries(score); 
+        const myAnswer = Object.fromEntries(entries); // 굳이???
+        const mbti = 
+            (myAnswer.E > myAnswer.I ? "E" : "I") +
+            (myAnswer.N > myAnswer.S ? "N" : "S") +
+            (myAnswer.T > myAnswer.F ? "T" : "F") +
+            (myAnswer.J > myAnswer.P ? "J" : "P");
+
+        resultEl.innerHTML = (`당신의 MBTI는 ${mbti}입니다.`);
+        
+        removeResult();
+    }
+
+    const removeResult = function() {
+        Object.values(answers).forEach(type => {
+            score[type] = 0; // 다시 초기화
+        });
+
+         setTimeout(() => {
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+
+        // 앤서값 비워버리기
+            for (let key in answers) {
+                delete answers[key];
+            }
+        }, 3000);
+    }
+    renderQuestions();
+  </script>
+
+</body>
+
+</html>
