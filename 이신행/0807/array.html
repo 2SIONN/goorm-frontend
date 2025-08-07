@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>array 예제</title>
+</head>
+<style>
+    *{
+        font-family:Verdana, Geneva, Tahoma, sans-serif
+    }
+    h1{
+        display:block;
+        text-align: center;
+        margin:30px;
+    }
+    body{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #dfdfdf;
+    }
+    .container {
+        display: flex;
+        width: 800px;
+        height: 150px;
+        background-color: white;
+        justify-content: space-between; /* 왼쪽과 오른쪽 끝으로 정렬 */
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 0 20px;
+        border-radius: 10px;
+        border: 1px solid black;
+        line-height:35px;
+        font-size:17px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);  /* 부드러운 아래 그림자 */
+    }
+
+    .leftside {
+        text-align: left;
+    }
+
+    .rightside {
+        text-align: right;
+    }
+
+    button{
+        color : white;
+        border-radius: 10px;
+        width:100px;
+        height:50px;
+        font-size:15px;
+        cursor: pointer;
+        text-align: center;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);  /* 부드러운 아래 그림자 */
+    }
+
+    .btnyes{
+        background-color: rgb(39, 39, 235);
+    }
+    .btnno{
+        background-color: #ef3535;
+    }
+
+    .modal{
+        position:absolute;
+        width:500px;
+        height:500px;
+        background-color: #dfdfdf;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index:999;
+        font-size:50px;
+        border-radius:10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);  /* 부드러운 아래 그림자 */
+    }
+
+    .close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: none;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+</style>
+<body>
+    <h1>항공편 스케줄</h1>
+    <!-- <div class="container">
+        <p id="airlines"></p>
+        <p id="seatStatuss"></p>
+        <p id="departures"></p>
+        <p id="arrivals"></p>
+        <p id="cabinClasss"></p>
+        <p id="flightNumbers"></p>
+    </div>
+    <div class="container">
+
+    </div> -->
+</body>
+<script>
+     const flightData = [
+      {
+        airnm: "대한항공",
+        fltno: "17",
+        depcity: "서울",
+        depairport: "ICN",
+        depdate: "2025-12-01",
+        deptm: "14:30",
+        arrcity: "로스앤젤레스",
+        arrairport: "LAX",
+        arrdate: "2025-12-01",
+        arrtm: "08:30",
+        cabinclass: "일반석",
+        baggage: "2개",
+        leftseat : "2좌석"
+      },
+      {
+        airnm: "유나이티드항공",
+        fltno: "391",
+        depcity: "로스앤젤레스",
+        depairport: "LAX",
+        depdate: "2025-12-31",
+        deptm: "07:21",
+        arrcity: "샌프란시스코",
+        arrairport: "SFO",
+        arrdate: "2025-12-31",
+        arrtm: "08:48",
+        cabinclass: "일반석",
+        baggage: "2개",
+        leftseat : "10좌석"
+      },
+      {
+        airnm: "유나이티드항공",
+        fltno: "1995",
+        depcity: "샌프란시스코",
+        depairport: "SFO",
+        depdate: "2026-01-29",
+        deptm: "19:10",
+        arrcity: "라스베이거스",
+        arrairport: "LAS",
+        arrdate: "2026-01-29",
+        arrtm: "20:43",
+        cabinclass: "일반석",
+        baggage: "2개",
+        leftseat : "1좌석"
+      },
+      {
+        airnm: "대한항공",
+        fltno: "6",
+        depcity: "라스베이거스",
+        depairport: "LAS",
+        depdate: "2026-02-27",
+        deptm: "22:50",
+        arrcity: "서울",
+        arrairport: "ICN",
+        arrdate: "2026-03-01",
+        arrtm: "05:20",
+        cabinclass: "일반석",
+        baggage: "2개",
+        leftseat : "없음"
+      }
+    ];
+
+    
+    flightData.forEach((data, index)=>{
+        
+        const container = document.createElement('div');
+        container.className='container';
+        document.body.appendChild(container);
+
+        const leftside = document.createElement('div');
+        leftside.className = 'leftside';
+        const rightside = document.createElement('div');
+        rightside.className = 'rightside';
+        container.appendChild(leftside);
+        container.appendChild(rightside);
+
+        const arrdep = document.createElement('div');
+        arrdep.textContent = `${data.arrcity}(${data.arrairport}) --> ${data.depcity}(${data.depairport})`;
+        arrdep.style.fontWeight='bold';
+        arrdep.style.fontSize='20px';
+        leftside.appendChild(arrdep);
+
+        const information = document.createElement('div');
+        information.textContent = `✈️${data.airnm} ${data.fltno} | ${data.depdate} ${data.deptm} 출발 --> ${data.arrdate} ${data.arrtm} 도착`;
+        leftside.appendChild(information);
+
+        const seat = document.createElement('div');
+        seat.textContent = `💺${data.cabinclass} | 🧳${data.baggage} | 남은 좌석: ${data.leftseat}`;
+        leftside.appendChild(seat);
+
+        const btn = document.createElement('button');
+        if(data.leftseat === "없음"){
+            btn.className = 'btnno';
+            btn. textContent = '예약 불가능'
+            btn.addEventListener('click', ()=>{
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div id="close" class="close">&times;</div>
+                    <p style="margin-top: 30px; text-align: center;">예약이 불가능합니다.</p>
+                `;
+                document.body.appendChild(modal);
+                const close = document.getElementById('close');
+                close.addEventListener('click', ()=>{
+                    modal.remove();
+                })
+            });
+            
+        } else{
+            btn.className = 'btnyes';
+            btn.textContent = '예약 가능';
+            btn.addEventListener('click', ()=>{
+                if(data.airnm == "대한항공"){
+                    window.open('https://www.koreanair.com/?hl=ko', '_blank');
+                }
+                // if(data.arinm == "유나이티드항공")
+                if(data.fltno == "391" || data.fltno == "1995"){
+                    console.log("df");
+                    window.open("https://www.united.com/ko/kr/", '_blank');
+                }
+            });
+            
+        }
+        rightside.appendChild(btn);
+
+
+
+    })
+
+
+
+
+
+
+</script>
+</html>
