@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: rgb(156, 209, 255);
+      padding: 20px;
+    }
+
+    #container {
+      text-align: center;
+    }
+
+    #timer-container {
+      font-size: 100px;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 15px 30px;
+      border: 1px solid #007bff;
+      border-radius: 5px;
+      background-color: white;
+      cursor: pointer;
+      transition: .2s ease;
+      font-weight: bold;
+      font-size: 20px;
+
+      &:hover {
+        background-color: #007bff;
+        color: white;
+      }
+
+      &:nth-of-type(1) {
+        margin-right: 20px;
+      }
+    }
+
+    #statusText {
+      margin-top: 20px;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+  <title>Timer</title>
+</head>
+
+<body>
+  <div id="container">
+    <div id="timer-container"></div>
+    <button id="timer-toggle"></button>
+    <button id="alarm-toggle"></button>
+    <p id="statusText"></p>
+  </div>
+  <audio loop src="spongebob.mp3"></audio>
+</body>
+<script>
+  let timerId = null;
+  let isAlarmOn = true;
+  const timerContainer = document.querySelector('#timer-container');
+  const timerToggle = document.querySelector('#timer-toggle');
+  const alarmToggle = document.querySelector('#alarm-toggle');
+  const statusText = document.querySelector('#statusText');
+  const audio = document.querySelector('audio');
+
+  timerToggle.addEventListener('click', toggleTimer);
+  alarmToggle.addEventListener('click', () => {
+    if (isAlarmOn && !audio.paused) resetAudio();
+    isAlarmOn = !isAlarmOn;
+    renderAlarmToggle();
+  });
+
+  function formatTime(curr) {
+    const formattedTime = curr.toLocaleTimeString("en-EN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    return formattedTime;
+  }
+
+  function renderTimerToggle() {
+    timerToggle.textContent = timerId ? '⏸️ Stop Timer' : '▶️ Start Timer';
+  }
+
+  function renderAlarmToggle() {
+    alarmToggle.textContent = isAlarmOn ? '🔇 Alarm Off' : '🔊 Alarm On';
+  }
+
+  function renderTimer() {
+    const now = new Date();
+    const time = formatTime(now);
+    timerContainer.textContent = time;
+    setAlarm(time);
+  }
+
+  function toggleTimer() {
+    if (timerId) {
+      clearInterval(timerId);
+      resetAudio();
+      timerId = null;
+    } else {
+      renderTimer();
+      timerId = setInterval(() => {
+        renderTimer();
+      }, 1000);
+    }
+    renderTimerToggle();
+  }
+
+  function setAlarm(curr) {
+    const minute = curr.split(':')[1];
+    if (isAlarmOn && audio.paused && minute === '00') audio.play();
+    else if (!audio.paused && minute !== '00') resetAudio();
+    statusText.textContent = audio.paused ? '' : '☕ 쉬는 시간! 오디오가 재생됩니다';
+  }
+
+  function resetAudio() {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
+  renderTimerToggle();
+  renderAlarmToggle();
+  toggleTimer();
+</script>
+
+</html>
