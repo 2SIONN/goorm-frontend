@@ -1,0 +1,80 @@
+<!-- TODO 해시태그 # 개선 필요 -->
+<!-- TODO 우와 나현님 테스트 코드 대박! -->
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tag Bookmark</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <h1>Tag Notes (Lite)</h1>
+      <div style="display: flex; gap: 8px">
+        <button type="button" id="theme-btn">🌓</button>
+      </div>
+    </header>
+
+    <section class="controls">
+      <form id="add-form" autocomplete="off">
+        <input id="title" placeholder="제목" required />
+        <input id="url" placeholder="링크(URL) 또는 메모" />
+        <input id="tags" placeholder="태그(쉼표로 구분)" />
+        <button type="submit">추가</button>
+      </form>
+
+      <div class="filters">
+        <input id="q" placeholder="검색(제목/태그) — 300ms 디바운스" />
+        <select id="sort">
+          <option value="recent">정렬: 최신</option>
+          <option value="title">정렬: 제목</option>
+          <option value="tags">정렬: 태그수</option>
+        </select>
+        <button type="button" id="clear-filters">필터 초기화</button>
+      </div>
+    </section>
+
+    <section class="grid" id="list"></section>
+    <aside class="stats" id="stats"></aside>
+    <div id="toast-root"></div>
+
+    <script type="module">
+      import { store } from './store.js';
+      import { THEME_KEY } from './constants.js';
+      import { themeBtnEl, qInputEl, sortEl } from './utils/dom.js';
+      import { searchFilter, sortFilter, tagFilter, clearFilter } from './utils/filter/filter.js';
+      import { createCardsRender } from './render/renderCards.js';
+      import { addItem } from './actions/addItem.js';
+      import { deleteItem } from './actions/deleteItem.js';
+
+      // 새로고침 필터 유지 ==================================
+      (() => {
+        const state = store.get() ?? {};
+        const { q, sort, selected } = state.filter ?? INITIAL_STATE.filter;
+        if (qInputEl) qInputEl.value = q;
+        if (sortEl) sortEl.value = sort;
+        const saved = localStorage.getItem(THEME_KEY);
+        document.body.classList.toggle(THEME_KEY, saved === '1');
+      })();
+
+      // 생성 및 구독 ==================================
+      const render = createCardsRender();
+      store.subscribe(render);
+
+      // 이벤트 등록 ==================================
+      themeBtnEl.addEventListener('click', () => {
+        const isLight = document.body.classList.toggle(THEME_KEY);
+        localStorage.setItem(THEME_KEY, isLight ? '1' : '0');
+      });
+      addItem();
+      deleteItem();
+      searchFilter(); // 검색
+      sortFilter(); // 정렬
+      tagFilter();
+      clearFilter();
+
+      render(store.get());
+    </script>
+  </body>
+</html>
