@@ -1,13 +1,14 @@
 import { Input } from '@/components/ui/input.jsx'
+import React from 'react'
 
-export function FormField({ 
-  label, 
-  name, 
-  value, 
-  placeholder, 
-  onChange, 
-  type = "text",
-  className = "" 
+export default React.memo(function FormField({
+  label,
+  name,
+  value,
+  placeholder,
+  onChange,
+  type = 'text',
+  className = '',
 }) {
   return (
     <div className={className}>
@@ -26,4 +27,4 @@ export function FormField({
       />
     </div>
   )
-}
+})
