@@ -3,8 +3,14 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faBlog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardAction } from './ui/card';
-
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+  CardAction,
+} from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 export default function ProfileCard({ user }) {
@@ -19,6 +25,7 @@ export default function ProfileCard({ user }) {
         <img
           src={profile}
           alt={name}
+          draggable={false}
           className="rounded-full w-[150px] h-[150px] object-cover my-1 mx-auto"
         />
         <p>
