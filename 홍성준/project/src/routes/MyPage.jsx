@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import InputField from '@/components/form/InputField';
+
 const EMOJIS = ['🧙', '🤹', '🖥️', '📊', '🕵️'];
 const EMOJI_STYLE = 'block border border-gray-300 p-5 peer-checked:bg-gray-200 rounded-sm';
 const USER = {
@@ -25,19 +27,16 @@ export default function MyPage() {
   };
   return (
     <div className="flex justify-center py-8 gap-8">
-      <div className="min-w-1/3 border border-gray-300 rounded-xl p-4">
-        <div className="mb-4">
-          <label htmlFor="username">이름</label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="이름을 입력하세요"
-            autoComplete={false}
-            className="w-full border border-gray-400 rounded-sm p-2 mt-2"
-            onChange={handleChange}
-          />
-        </div>
+      <div className="min-w-1/3 border border-gray-300 rounded-xl p-4 [&_div]:mb-4">
+        <InputField
+          label="이름"
+          type="text"
+          name="username"
+          id="username"
+          placeholder="이름을 입력하세요"
+          className="w-full border border-gray-400 rounded-sm p-2 mt-2"
+          handleChange={handleChange}
+        />
         <div className="mb-4">
           <label htmlFor="job">직무</label>
           <select
