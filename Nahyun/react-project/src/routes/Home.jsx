@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom'
 import { ROUTES } from '../lib/routes.js'
 import { useMediaQuery } from '../hooks/useMediaQuery.js'
+import { useContext } from 'react'
+import { ThemeContext } from '@/context/ThemeContext.jsx'
 
 export default function Home() {
   const isMobile = useMediaQuery('(max-width: 768px)')
@@ -14,9 +16,7 @@ export default function Home() {
       />
       <div
         className={`absolute z-10 text-center group ${
-          isMobile 
-            ? 'bottom-16 left-1/2 transform -translate-x-1/2 px-4' 
-            : 'bottom-20 right-50 p-8'
+          isMobile ? 'bottom-16 left-1/2 transform -translate-x-1/2 px-4' : 'bottom-20 right-50 p-8'
         }`}
       >
         <h1 className={`font-bold text-white drop-shadow-lg ${isMobile ? 'text-xl' : 'text-5xl'}`}>

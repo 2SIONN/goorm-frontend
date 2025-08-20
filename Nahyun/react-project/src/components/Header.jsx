@@ -1,5 +1,7 @@
 import { Menu } from "lucide-react"
 import { Button } from "./ui/button.jsx"
+import { Link } from "react-router"
+import { ROUTES } from "@/lib/routes.js"
 
 export default function Header({ onMenuClick }) {
   return (
@@ -11,8 +13,12 @@ export default function Header({ onMenuClick }) {
         <h1 className="text-lg font-semibold text-gray-800">My APP</h1>
       </div>
       <div className="flex gap-2">
-        <Button variant="outline">로그인</Button>
-        <Button variant="outline">회원가입</Button>
+        <Button variant="outline" asChild>
+          <Link to={ROUTES.AUTH.LOGIN}>로그인</Link>
+        </Button>
+        <Button variant="outline" asChild>
+          <Link to={ROUTES.AUTH.REGISTER}>회원가입</Link>
+        </Button>
       </div>
     </header>
   )

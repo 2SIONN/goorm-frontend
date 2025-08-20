@@ -6,25 +6,19 @@ import {
   SelectValue,
 } from '@/components/ui/select.jsx'
 
-export function FormSelect({ 
-  label, 
-  name, 
-  value, 
-  placeholder, 
-  options = [], 
+export default function FormSelect({
+  label,
+  name,
+  value,
+  placeholder,
+  options = [],
   onChange,
-  className = "" 
+  className = '',
 }) {
   return (
     <div className={className}>
-      <label className="text-sm font-medium">
-        {label}
-      </label>
-      <Select 
-        name={name}
-        value={value} 
-        onChange={onChange}
-      >
+      <label className="text-sm font-medium">{label}</label>
+      <Select name={name} value={value} onValueChange={(value) => onChange({ target: { name, value } })}>
         <SelectTrigger className="w-full mt-2">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

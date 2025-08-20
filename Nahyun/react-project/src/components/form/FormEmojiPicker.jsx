@@ -1,18 +1,16 @@
 import { Input } from '@/components/ui/input.jsx'
 
-export function FormEmojiPicker({ 
-  label, 
-  name, 
-  value, 
-  emojis = [], 
+export default function FormEmojiPicker({
+  label,
+  name,
+  value,
+  emojis = [],
   onChange,
-  className = "" 
+  className = '',
 }) {
   return (
     <div className={className}>
-      <label className="text-sm font-medium">
-        {label}
-      </label>
+      <label className="text-sm font-medium">{label}</label>
       <div className="flex gap-2 mt-2">
         {emojis.map((emoji, idx) => (
           <label
