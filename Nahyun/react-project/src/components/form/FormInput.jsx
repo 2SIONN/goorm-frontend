@@ -1,13 +1,14 @@
 import { Input } from '@/components/ui/input.jsx'
-import React from 'react'
 
-export default React.memo(function FormField({
+export default function FormInput({
   label,
   name,
   value,
   placeholder,
   onChange,
   type = 'text',
+  autoComplete,
+  error,
   className = '',
 }) {
   return (
@@ -22,9 +23,10 @@ export default React.memo(function FormField({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="mt-2"
-        autoComplete="off"
+        autoComplete={autoComplete || 'off'}
+        className={`mt-2 ${error ? 'border-red-500' : ''}`}
       />
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   )
-})
+}

@@ -1,8 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card.jsx'
-import { FormField } from '@/components/form/FormField.jsx'
-import { FormSelect } from '@/components/form/FormSelect.jsx'
-import { FormEmojiPicker } from '@/components/form/FormEmojiPicker.jsx'
+import FormSelect from '@/components/form/FormSelect.jsx'
+import FormEmojiPicker from '@/components/form/FormEmojiPicker.jsx'
 import { useCallback, useState, useMemo } from 'react'
+import FormInput from '@/components/form/FormInput.jsx'
 
 const USER = {
   userName: '',
@@ -44,7 +44,7 @@ export default function MyPage() {
         <CardContent className="flex items-center justify-center h-full">
           <form className="w-full">
             <div className="flex flex-col gap-5">
-              <FormField
+              <FormInput
                 label="이름"
                 name="userName"
                 value={userInfo.userName}

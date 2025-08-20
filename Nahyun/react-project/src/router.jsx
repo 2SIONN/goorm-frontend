@@ -20,10 +20,8 @@ export default function AppRoutes() {
           <Route path={ROUTES.MEMBER.PROFILE} element={<Profile />} />
         </Route>
 
-        <Route>
-          <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
-          <Route path={ROUTES.AUTH.REGISTER} element={<Register />} />
-        </Route>
+        <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
+        <Route path={ROUTES.AUTH.REGISTER} element={<Register />} />
 
         <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
       </Route>

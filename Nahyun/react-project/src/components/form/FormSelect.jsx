@@ -5,9 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select.jsx'
-import React from 'react'
 
-export default React.memo(function FormSelect({
+export default function FormSelect({
   label,
   name,
   value,
@@ -19,7 +18,7 @@ export default React.memo(function FormSelect({
   return (
     <div className={className}>
       <label className="text-sm font-medium">{label}</label>
-      <Select name={name} value={value} onChange={onChange}>
+      <Select name={name} value={value} onValueChange={(value) => onChange({ target: { name, value } })}>
         <SelectTrigger className="w-full mt-2">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
@@ -33,4 +32,4 @@ export default React.memo(function FormSelect({
       </Select>
     </div>
   )
-})
+}

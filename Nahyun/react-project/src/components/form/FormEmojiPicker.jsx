@@ -1,7 +1,6 @@
 import { Input } from '@/components/ui/input.jsx'
-import React from 'react'
 
-export default React.memo(function FormEmojiPicker({
+export default function FormEmojiPicker({
   label,
   name,
   value,
@@ -34,4 +33,4 @@ export default React.memo(function FormEmojiPicker({
       </div>
     </div>
   )
-})
+}
