@@ -7,6 +7,8 @@ import Login from './routes/auth/Login.jsx'
 import Register from './routes/auth/Register.jsx'
 import NotFound from './routes/NotFound.jsx'
 import { lazy } from 'react'
+import Practice from './routes/practice/Practice.jsx'
+import Guestbook from './routes/posts/Guestbook.jsx'
 
 const Profile = lazy(() => import('@/routes/member/Profile.jsx'))
 
@@ -23,6 +25,8 @@ export default function AppRoutes() {
         <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
         <Route path={ROUTES.AUTH.REGISTER} element={<Register />} />
 
+        <Route path={ROUTES.GUEST_BOOK} element={<Guestbook />} />
+        <Route path={ROUTES.PRACTICE.PRACTICE} element={<Practice />} />
         <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
       </Route>
     </Routes>

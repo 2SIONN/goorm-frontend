@@ -10,6 +10,8 @@ export default function FormInput({
   autoComplete,
   error,
   className = '',
+  disabled = false,
+  readOnly = false,
 }) {
   return (
     <div className={className}>
@@ -24,6 +26,8 @@ export default function FormInput({
         value={value}
         onChange={onChange}
         autoComplete={autoComplete || 'off'}
+        disabled={disabled}
+        readOnly={readOnly}
         className={`mt-2 ${error ? 'border-red-500' : ''}`}
       />
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}

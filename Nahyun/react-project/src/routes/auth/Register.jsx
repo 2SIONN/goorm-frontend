@@ -1,34 +1,11 @@
 import { useState, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import FormInput from '@/components/form/FormInput'
-
-const validate = (values) => {
-  const errors = {}
-
-  if (!values.email.trim()) {
-    errors.email = '이메일을 입력해주세요.'
-  }
-
-  if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email)) {
-    errors.email = '올바른 이메일 주소를 입력해주세요.'
-  }
-
-  if (!values.password) {
-    errors.password = '비밀번호를 입력해주세요.'
-  }
-
-  if (!values.confirm) {
-    errors.confirm = '비밀번호 확인을 입력해주세요.'
-  }
-
-  if (values.password !== values.confirm) {
-    errors.confirm = '비밀번호가 일치하지 않습니다.'
-  }
-
-  return errors
-}
+import { auth } from '@/api/auth.js'
+import { validateRegister } from '@/lib/validators.js'
 
 export default function Register() {
   const navigate = useNavigate()
@@ -40,6 +17,25 @@ export default function Register() {
   })
   const [errors, setErrors] = useState({})
 
+  const registerMutation = useMutation({
+    mutationFn: auth.register,
+    onSuccess: () => {
+      alert('회원가입이 완료되었습니다!')
+      setFormData({
+        name: '',
+        email: '',
+        password: '',
+        confirm: '',
+      })
+      setErrors({})
+      navigate('/login', { replace: true })
+    },
+    onError: (error) => {
+      console.error(error)
+      alert('회원가입에 실패했습니다. 다시 시도해주세요.')
+    },
+  })
+
   const handleChange = useCallback(
     (e) => {
       const { name, value } = e.target
@@ -50,7 +46,7 @@ export default function Register() {
 
       setFormData(newFormData)
 
-      const fieldErrors = validate(newFormData)
+      const fieldErrors = validateRegister(newFormData)
 
       setErrors((prev) => {
         const newErrors = { ...prev, [name]: fieldErrors[name] || '' }
@@ -70,19 +66,15 @@ export default function Register() {
     (e) => {
       e.preventDefault()
 
-      alert('회원가입이 완료되었습니다!')
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      }
 
-      setFormData({
-        name: '',
-        email: '',
-        password: '',
-        confirm: '',
-      })
-      setErrors({})
-
-      navigate('/login')
+      registerMutation.mutate(payload)
     },
-    [navigate]
+    [formData, registerMutation]
   )
 
   const isFormValid = useMemo(
@@ -96,6 +88,7 @@ export default function Register() {
   )
 
   const btnVariant = useMemo(() => (isFormValid ? 'default' : 'outline'), [isFormValid])
+  const isLoading = registerMutation.isPending
 
   return (
     <div className="flex justify-center p-4">
@@ -148,8 +141,13 @@ export default function Register() {
               error={errors.confirm}
             />
 
-            <Button type="submit" variant={btnVariant} className="w-full" disabled={!isFormValid}>
-              회원가입
+            <Button 
+              type="submit" 
+              variant={btnVariant} 
+              className="w-full" 
+              disabled={!isFormValid || isLoading}
+            >
+              {isLoading ? '회원가입 중...' : '회원가입'}
             </Button>
           </form>
         </CardContent>

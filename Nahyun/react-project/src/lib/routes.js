@@ -1,7 +1,7 @@
 export const ROUTES = {
   HOME: '/',
 
-  MY_PAGE: '/my',
+  MY_PAGE: '/my-page',
 
   MEMBER: {
     ROOT: '/member',
@@ -14,4 +14,10 @@ export const ROUTES = {
   },
 
   NOT_FOUND: '*',
+
+  PRACTICE: {
+    PRACTICE: '/practice',
+  },
+
+  GUEST_BOOK: '/guestbook',
 }
