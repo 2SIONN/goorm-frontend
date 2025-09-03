@@ -1,4 +1,4 @@
-import { Home, Users, UserPen } from 'lucide-react'
+import { Home, Users, UserPen, Pen, Book } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 import { cn } from '../lib/utils.js'
 import { ROUTES } from '../lib/routes.js'
@@ -18,6 +18,16 @@ const items = [
     title: 'Profile',
     url: ROUTES.MEMBER.PROFILE,
     icon: Users,
+  },
+  {
+    title: 'Guestbook',
+    url: ROUTES.GUEST_BOOK,
+    icon: Book,
+  },
+  {
+    title: 'Practice',
+    url: ROUTES.PRACTICE.PRACTICE,
+    icon: Pen,
   },
 ]
 
