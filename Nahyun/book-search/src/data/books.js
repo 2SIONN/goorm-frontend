@@ -77,4 +77,4 @@ export function makeBooks(n = 5000, seed = 42) {
 }
 
 // 기본 데이터 세트
-export const BOOKS = makeBooks(5000, 99);
+export const BOOKS = makeBooks(1000000, 99);
