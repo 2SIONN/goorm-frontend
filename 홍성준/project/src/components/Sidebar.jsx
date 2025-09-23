@@ -50,7 +50,7 @@ export default function Sidebar({ sidebarOpen, handleClose }) {
               구름 프론트엔드 5회차
             </div>
             <button
-              className="hover:cursor-pointer hover:text-red-500 duration-150 ease-in px-1 sm:hidden"
+              className="hover:text-red-500 duration-150 ease-in px-1 sm:hidden"
               onClick={handleClose}
             >
               ✕
