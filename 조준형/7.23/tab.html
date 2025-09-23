@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tab 중앙정렬</title>
+  <style>
+    #container {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+    }
+
+    .tab {
+      font-family: sans-serif;
+      background-color: #eee;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .tab.active {
+      background-color: tomato;
+      color: white;
+    }
+
+    .tab.active::after {
+      content: "";
+      position: relative;
+      transform: translateX(-50%);
+      left: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div class="tab">탭1</div>
+    <div class="tab">탭2</div>
+    <div class="tab">탭3</div>
+    <div class="tab">탭4</div>
+    <div class="tab">탭5</div>
+    <div class="tab">탭6</div>
+    <div class="tab">탭7</div>
+    <div class="tab">탭8</div>
+    <div class="tab">탭9</div>
+    <div class="tab">탭10</div>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const container = document.getElementById('container');
+    let activeTab = null;
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        if (activeTab) {
+          activeTab.classList.remove('active');
+        }
+
+        tab.classList.add('active');
+        activeTab = tab;
+
+        // 현재 탭이 container 왼쪽에서 얼마나 떨어졌는지 + 탭 너비의 절반 = 탭의 중앙 위치
+        const tabCenter = tab.offsetLeft + tab.offsetWidth / 2;
+
+        // 컨테이너의 너비의 절반 => 화면에서 컨테이너의 중앙 위치
+        const containerCenter = container.offsetWidth / 2;
+
+        const scrollLeft = tabCenter - containerCenter;
+
+        container.scrollTo({
+          left: scrollLeft,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>계정 생성 화면</title>
+        <style>
+            .box {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .row {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                
+                width: 500px;
+                border: 1px solid black;
+                height: 600px;
+            }
+
+            .userInfo
+            {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                border: 1px solid black;
+                position: relative;
+                width: 95%;
+                text-align: center;
+            }
+
+            .checkPass
+            {
+                margin-top: 20px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                border: 1px solid black;
+                position: relative;
+                width: 95%;
+                text-align: center;
+            }
+            
+            #userCount {
+                margin-top: 20px;
+                width: 95%;
+                height: 100%;
+                margin-bottom: 20px;
+                padding-top: 10px;
+                position: relative;
+                text-align: center;
+                border: 1px solid black;
+            }
+           
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            <div class="row">
+                <h2>계정 생성 테스트 중</h2>
+                <div class="userInfo">
+                    <label for="userName">이름</label>
+                    <input type="text" id="userName" placeholder="이름을 입력해주세요.">
+                    <br>
+                    <label for="userPass">비밀번호</label>
+                    <input type="password" id="userPass" placeholder=" 비밀번호를 입력해주세요.">
+                    <br>
+                    <button onclick="createUser()">계정 생성</button>
+                    <p style="font-size: 0.75rem;">생성 상태 : </span>
+                    <span id="userAdd" style="font-size: 0.75rem;"></p>
+                </div>
+                <div class="checkPass">
+                    <label for="equalPass">비밀번호 확인</label>
+                    <input type="password" id="equalPass" placeholder="설정한 비밀번호를 다시 입력해주세요.">
+                    <br>
+                    <button onclick="passwordCheck()">비밀번호 일치 여부 확인</button>
+                    <p style="font-size: 0.75rem;">일치 여부 : </p>
+                    <span id="isEqual" style="font-size: 0.75rem;"></span>
+                </div>
+                <div id="userCount">
+                    <button onclick="countUser()">유저 수 체크</button>
+                    <p>현재 유저 수 : </p>
+                    <span id="getUsers"></span>
+                </div>
+            </div>
+        </div>
+        <script>
+            class User{
+                static count = 0;
+                _name; // 클래스에서만 사용하는 변수
+                #password; // private 변수
+                
+                constructor(name, password) {
+                    this.name = name; // set 사용을 위해선 _name=으로 해선 안됨.
+                    this.#password = password;
+                
+                    User.count++;
+                    console.log(User.count);
+                    console.log(this.name); // get name으로 대문자 치환되서 표기됨
+                    console.log(this._name); // 실제 저장된 값 출력.
+                }
+                get name() { // _name 받아서 대문자로 치환
+                    return this._name.toUpperCase();
+                }
+
+                set name(value) { 
+                    if (value.length < 2) {
+                        throw new Error("이름은 두 글자 이상이어야 합니다.");
+                    }
+                    else this._name = value;
+                }
+
+                checkPassword(inputPw) { // 5번 조건 클래스 메소드
+                    return this.#password == inputPw;
+                }
+                
+                static getCount() { // 5번 조건 클래스 메소드
+                    return User.count;
+                }
+            }
+
+            let currentUser; // 사용될 현재 유저 정보를 전역으로!
+
+            const createUser = function() { // 버튼 누르면 생성.
+                const name = document.getElementById("userName").value;
+                const password = document.getElementById("userPass").value;
+                try {
+                    currentUser = new User(name, password); // 에러를 DOM 안에 띄우기 위해 트라이 캐치 사용함.
+                    document.getElementById("userAdd").textContent =` 성공, ${currentUser.name}님 환영합니다.`;
+                } catch (error) {
+                    document.getElementById("userAdd").textContent =` 실패, ${(error.message)}`;
+                }
+            }
+            
+            const passwordCheck = function() {
+                if(currentUser==undefined) {// 아이디 생성 안 되어있어도 passwordCheck가 눌리는 걸 방지.
+                    document.getElementById("isEqual").textContent ="에러, 아이디 부터 만들어 주세요.";
+                    return;
+                }
+
+                const inputPw = document.getElementById("equalPass").value;
+                const equalPass = currentUser.checkPassword(inputPw);
+                if(equalPass==true){
+                    document.getElementById("isEqual").textContent ="비밀번호가 일치합니다.";
+                }
+                else if(equalPass==false) {
+                    document.getElementById("isEqual").textContent ="비밀번호가 일치하지 않습니다.";
+                }
+            }
+
+            const countUser = function() {
+                count = User.getCount();
+                document.getElementById("getUsers").textContent =`${count}명이 현재 생성되었습니다.`;
+            } // 에러가 날 것 같았지만, User.count의 경우엔 정적(static) 필드라 클래스 로딩 시 자동으로 0이 됨.
+                // 이 값은 인스턴스를 만들지 않아도 접근할 수 있음.
+        </script>
+    </body>
+</html>

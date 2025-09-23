@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>탭 스크롤이 이동이 된다고?</title>
+    </head>
+    <style>
+    
+    .tabs-container {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      border-bottom: 2px solid #ddd;
+      gap: 10px;
+    }
+
+    .tab-item {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 5px;
+      background: #eeeeee;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab-item.active {
+      background: #aa0000;
+      color: white;
+    }
+
+    #tab-content {
+      position: relative;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    </style>
+    <body>
+        <div class="tabs-container" id="tabs">
+            <button class="tab-item">탭 1</butoon>
+            <button class="tab-item">탭 2</button>
+            <button class="tab-item">탭 3</button>
+            <button class="tab-item">탭 4</button>
+            <button class="tab-item">탭 5</button>
+            <button class="tab-item">탭 6</button>
+            <button class="tab-item">탭 7</button>
+            <button class="tab-item">탭 8</button>
+            <button class="tab-item">탭 9</button>
+            <button class="tab-item">탭 10</button>
+            <button class="tab-item">탭 11</button>
+            <button class="tab-item">탭 12</button>
+            <button class="tab-item">탭 13</button>
+            <button class="tab-item">탭 14</button>
+            <button class="tab-item">탭 15</button>
+            <button class="tab-item">탭 16</button>
+            <button class="tab-item">탭 17</button>
+            <button class="tab-item">탭 18</button>
+            <button class="tab-item">탭 19</button>
+            <button class="tab-item">탭 20</button>
+        </div>
+        <div id="tab-content" style="margin-top:20px;"></div>
+        <script>
+		        const tabsContainer = document.getElementById('tabs');
+            const tabContent = document.getElementById('tab-content');
+    
+            
+            // 탭 클릭 이벤트
+            tabsContainer.addEventListener('click', (e) => {
+                const clickedTab = e.target;
+                const currentActive = tabsContainer.querySelector('.tab-item.active');
+                
+                if (!(clickedTab instanceof HTMLButtonElement)) {
+                  tabContent.textContent = '';
+                  currentActive.classList.remove('active');
+                  return; // 타겟이 버튼이 아니면 무시
+                }
+              
+		
+		            // 기존 활성 탭 비활성화
+		            
+		            if (currentActive) {
+                  currentActive.classList.remove('active');
+                }
+		            // 새 탭 활성화
+		            clickedTab.classList.add('active');
+		
+		            // 가로 중앙 스크롤 이동
+		            const containerRect = tabsContainer.getBoundingClientRect();
+		            const tabRect = clickedTab.getBoundingClientRect();
+		            const offset = tabRect.left - containerRect.left - (containerRect.width / 2) + (tabRect.width / 2);
+		
+		            tabsContainer.scrollBy({ 
+                  left: offset, behavior: 'smooth'
+                });
+		
+		            // 콘텐츠 업데이트
+		            tabContent.textContent = `${clickedTab.textContent} 항목이 클릭되었습니다.`;
+		            });
+        </script>
+    </body>
+</html>

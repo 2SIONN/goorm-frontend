@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>Select Target</title>
+    </head>
+    <style>
+        #wrap {
+            border: 1px solid black;
+            width: 500px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+    </style>
+    <body>
+        <div style="display: flex; justify-content: center;">
+            <div id="wrap">
+                <div style="margin-top: 20px; margin-bottom: 20px;">
+                    <label>Target | </label>
+                        <select id="targetSelect">
+                        <option value="">타겟을 선택하십시오.</option>
+                    </select>
+                </div>
+
+                <form id="targetForm">
+                    <label>이름</label>
+                    <input type="text" id="targetName" name="name" />
+                    <label>이메일</label>
+                    <input type="email" id="targetEmail" name="email" />
+                </form>
+            </div>
+        </div>
+        <script>
+            const targetSelect = document.getElementById('targetSelect');
+            const targetName = document.getElementById('targetName');
+            const targetEmail = document.getElementById('targetEmail');
+
+            const loadTargets = async function() {
+                const res = await fetch('https://jsonplaceholder.typicode.com/users');
+                const targets = await res.json();
+                
+                targets.forEach(enemy => {
+                    const option = document.createElement('option');
+                    option.value = enemy.id;
+                    option.textContent = enemy.name;
+                    targetSelect.appendChild(option);
+                });
+                
+            }
+
+            loadTargets();
+
+            targetSelect.addEventListener('change', async (e) => {
+                const targetId = e.target.value; // 타겟을 누르면
+                let valid = true;
+                
+                if(targetId=="") {
+                    targetName.value = "";
+                    targetEmail.value = "";
+                    valid = false;
+                }
+                if(valid == true) {
+                    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${targetId}`); // 타겟의 아이디에서
+                    const targets = await res.json(); //json() 사용.
+
+                    targetName.value = targets.name;
+                    targetEmail.value = targets.email;
+                }
+            });
+        </script>
+    </body>
+</html>

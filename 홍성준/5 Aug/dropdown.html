@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    li:not(#selected li) {
+      padding: 5px 20px;
+      list-style-type: none;
+      transition: 0.3s ease;
+
+      &:hover {
+        cursor: pointer;
+        background-color: aquamarine;
+        border-radius: 5px;
+      }
+    }
+
+    .dropdown-container {
+      position: relative;
+    }
+
+    .dropdown {
+      position: absolute;
+      background-color: #e2e2e2;
+      border-radius: 5px;
+    }
+
+    .flex-container {
+      width: 50%;
+      justify-content: space-around;
+      display: flex;
+      white-space: nowrap;
+    }
+  </style>
+  <title>Dropdown</title>
+</head>
+
+<body>
+  <div class="flex-container">
+    <div id="fruit" class="dropdown-container">
+      <button id="fruit-btn">과일 고르기</button>
+    </div>
+    <div id="drink" class="dropdown-container">
+      <button id="drink-btn">음료 고르기</button>
+    </div>
+  </div>
+  <ul id="selected"></ul>
+</body>
+<script>
+  class Dropdown {
+    static selected = { fruit: null, drink: null };
+    #type; #name;
+    constructor(selector, list) {
+      this.selector = selector;
+      this.list = list;
+      this.#type = selector.slice(1);
+      this.#name = this.#type + '-dropdown';
+      this.isOpen = false;
+      this._create();
+    }
+
+    _create() {
+      this.container = document.querySelector(this.selector);
+      const dropdown = document.createElement('div');
+      dropdown.id = this.#name;
+      dropdown.className = 'dropdown';
+      const list = document.createElement('ul');
+      this.list.forEach((i) => {
+        const item = document.createElement('li');
+        item.id = i.name;
+        item.innerHTML = `${i.icon} ${i.name}`;
+        list.appendChild(item);
+      });
+
+      list.addEventListener('click', (e) => {
+        this._selectItem(e.target.id);
+      });
+
+      dropdown.appendChild(list);
+      this.container.appendChild(dropdown);
+      dropdown.style.display = 'none';
+    }
+
+    toggle() {
+      if (!this.isOpen) this._open();
+      else this._close();
+    }
+
+    _open() {
+      this.isOpen = true;
+      const dropdown = document.querySelector('#' + this.#name);
+      if (!dropdown) {
+        throw new Error("Dropdown doesn't exist");
+      } else {
+        dropdown.style.display = 'block';
+      }
+    }
+
+    _close() {
+      this.isOpen = false;
+      const dropdown = document.querySelector('#' + this.#name);
+      if (!dropdown) {
+        throw new Error("Dropdown doesn't exist");
+      }
+      dropdown.style.display = 'none';
+    }
+
+    _selectItem(item) {
+      if(Dropdown.selected[this.#type] === item)return;
+      let p = document.querySelector(`#selected-${this.#type}`);
+      if (!p) {
+        p = document.createElement('p');
+        p.id = `selected-${this.#type}`;
+        this.container.appendChild(p);
+      }
+      Dropdown.selected[this.#type] = item;
+      if (Dropdown.selected['fruit'] && Dropdown.selected['drink']) {
+        Dropdown.getComb(Dropdown.selected);
+      }
+      const content = this.#type === 'fruit' ? '선택한 과일:' : '선택한 음료:';
+      p.textContent = `${content} ${Dropdown.selected[this.#type]}`;
+    }
+
+    static getComb({ fruit, drink }) {
+      const list = document.querySelector('#selected');
+      let result = '';
+      if (drink === '우유') {
+        result = fruit + '라떼';
+      } else {
+        result = fruit + drink;
+      }
+      const item = document.createElement('li');
+      item.textContent = `선택한 조합: ${result}`;
+      list.prepend(item);
+    }
+  }
+  const fruitDropdown = new Dropdown('#fruit', [
+    { name: '바나나', icon: '🍌' },
+    { name: '포도', icon: '🍇' },
+    { name: '체리', icon: '🍒' }
+  ]);
+  const drinkDropdown = new Dropdown('#drink', [
+    { name: '우유', icon: '🥛' },
+    { name: '에이드', icon: '🍹' },
+    { name: '주스', icon: '🧃' }
+  ]);
+
+  document.querySelector('#fruit-btn').addEventListener('click', () => {
+    fruitDropdown.toggle();
+  });
+
+  document.querySelector('#drink-btn').addEventListener('click', () => {
+    drinkDropdown.toggle();
+  });
+</script>
+
+</html>

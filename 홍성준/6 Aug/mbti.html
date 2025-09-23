@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MBTI 검사</title>
+  <style>
+    body {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .question {
+      background: #f9f9f9;
+      padding: 20px;
+      margin-bottom: 25px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .question p {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .options {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .option {
+      display: inline-block;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    label {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #a957c2;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    input[type="radio"]:checked+label {
+      background-color: #e03f65;
+    }
+
+    #result {
+      margin: 40px 0;
+      font-size: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🧠 MBTI 간단 검사</h1>
+  <div id="result"></div>
+  <div id="quiz"></div>
+
+  <script>
+    const questions = {
+      q1: { text: "고등학교에서 유명했나요?", a: "E", b: "I" },  // EI
+      q2: { text: "운동(스포츠)를 하나요?", a: "S", b: "N" },   // SN
+      q3: { text: "수학을 잘하나요?", a: "T", b: "F" },        // TF
+      q4: { text: "지금 방이 깨끗한가요?", a: "J", b: "P" }     // JP
+    };
+
+    const mbtiType = [
+      ['E', 'I'],
+      ['N', 'S'],
+      ['F', 'T'],
+      ['P', 'J'],
+    ];
+
+    const answers = {}; // 사용자의 응답을 저장할 객체
+    // 각 MBTI 항목 선택 시 점수 증가 (항목이 많아질 경우 유용!)
+    // const score = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+    const quizEl = document.getElementById("quiz");
+    const resultEl = document.getElementById("result");
+
+    quizEl.addEventListener('change', (e) => {
+      const { name, value } = e.target;
+      answers[name] = value;
+      if (Object.keys(answers).length === Object.keys(questions).length) showResult();
+    });
+
+    function renderQuestions() {
+      // Object.entries
+      // Object.keys
+      // 모든 질문에 응답 완료하면 결과 표시
+
+      Object.entries(questions).forEach(([qName, qContent]) => {
+        const div = document.createElement('div');
+        div.className = 'question';
+        div.innerHTML = `
+          <p>${qName.toUpperCase()}. ${qContent.text}</p>
+          <div class='options'>
+            <div class='option'>
+              <input type="radio" id=${qName}-a name=${qName} value=${qContent.a} />
+              <label for=${qName}-a>Yes</label>
+            </div>
+            <div class='option'>
+              <input type="radio" id=${qName}-b name=${qName} value=${qContent.b} />
+              <label for=${qName}-b>No</label>
+            </div>
+          </div>
+        `;
+        quizEl.appendChild(div);
+      });
+    }
+
+    function showResult() {
+      // Object.values
+      // 사용자 응답을 반복하며 해당 지표의 점수 증가
+      // 객체 재구성을 위해 entries → fromEntries 사용
+      const score = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+      // Object.values(answers).forEach((answer) => score[answer]++);
+      // const newScore = Object.fromEntries(Object.entries(score));
+      Object.values(answers).forEach((answer) => score[answer]++);
+      const result = mbtiType.reduce((acc, [first, second]) => acc += score[first] > score[second] ? first : second, '');
+      resultEl.textContent = `🧠 당신의 MBTI는 ${result}입니다.`;
+    }
+
+    renderQuestions();
+
+  </script>
+</body>
+
+</html>

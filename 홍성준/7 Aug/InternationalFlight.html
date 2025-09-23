@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #d3e1ff;
+      text-align: center;
+      height: 100vh;
+      padding: 10px;
+    }
+
+    .flight-container {
+      width: 800px;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.313);
+      margin: 20px auto 0;
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      text-align: start;
+      align-items: center;
+    }
+
+    .flight-container .flight-detail {
+      color: #737373;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    button {
+      background-color: #196dff;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+  <title>국제선</title>
+</head>
+
+<body>
+  <div class="container"></div>
+  <script>
+    const flights = [
+      {
+        airnm: "대한항공",
+        fltno: "17",
+        depcity: "서울",
+        depairport: "ICN",
+        depdate: "2025-12-01",
+        deptm: "14:30",
+        arrcity: "로스앤젤레스",
+        arrairport: "LAX",
+        arrdate: "2025-12-01",
+        arrtm: "08:30",
+        cabinclass: "일반석",
+        baggage: "2개"
+      },
+      {
+        airnm: "유나이티드항공",
+        fltno: "391",
+        depcity: "로스앤젤레스",
+        depairport: "LAX",
+        depdate: "2025-12-31",
+        deptm: "07:21",
+        arrcity: "샌프란시스코",
+        arrairport: "SFO",
+        arrdate: "2025-12-31",
+        arrtm: "08:48",
+        cabinclass: "일반석",
+        baggage: "2개"
+      },
+      {
+        airnm: "유나이티드항공",
+        fltno: "1995",
+        depcity: "샌프란시스코",
+        depairport: "SFO",
+        depdate: "2026-01-29",
+        deptm: "19:10",
+        arrcity: "라스베이거스",
+        arrairport: "LAS",
+        arrdate: "2026-01-29",
+        arrtm: "20:43",
+        cabinclass: "일반석",
+        baggage: "2개"
+      },
+      {
+        airnm: "대한항공",
+        fltno: "6",
+        depcity: "라스베이거스",
+        depairport: "LAS",
+        depdate: "2026-02-27",
+        deptm: "22:50",
+        arrcity: "서울",
+        arrairport: "ICN",
+        arrdate: "2026-03-01",
+        arrtm: "05:20",
+        cabinclass: "일반석",
+        baggage: "2개"
+      }
+    ];
+
+    const container = document.querySelector('.container');
+    container.innerHTML = flights.reduce((acc, {
+      airnm,
+      fltno,
+      depcity,
+      depairport,
+      depdate,
+      deptm,
+      arrcity,
+      arrairport,
+      arrdate,
+      arrtm,
+      cabinclass,
+      baggage
+    }) => {
+      return acc + `
+      <div class="flight-container">
+        <div>
+          <h3>${depcity} (${depairport}) → ${arrcity} (${arrairport})</h3>
+          <p class='flight-detail'>✈️ ${airnm} ${fltno} | ${depdate} ${deptm} 출발 → ${arrdate} ${arrtm} 도착</p>
+          <p class='flight-detail'>💺 ${cabinclass} | 💼 ${baggage}</p>
+        </div>
+        <button>예약 가능</button>
+      </div>
+    `;
+    }, '<h1>항공 스케줄</h1>');
+  </script>
+</body>
+
+</html>

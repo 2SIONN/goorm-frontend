@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입장 확인기</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    input {
+      margin-bottom: 5px;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h2><i class="fa-solid fa-phone-volume"></i> 입장 확인기</h2>
+  <div>
+    <label for="name">이름</label>
+    <input type="text" id="name">
+  </div>
+  <div>
+    <label for="age">나이</label>
+    <input type="number" id="age">
+  </div>
+  <button type="button">확인</button>
+  <p id="msg-container"></p>
+</body>
+<script>
+  document.querySelector('button').addEventListener('click', () => {
+    checkValidity();
+  });
+
+  function checkValidity() {
+    const name = document.getElementById('name').value;
+    const age = document.getElementById('age').value;
+    const msgContainer = document.getElementById('msg-container');
+    if (name !== '' && age !== '') {
+      if (age < 20) {
+        msgContainer.innerHTML = `미성년자는 입장 불가입니다. ${20 - Number(age)}년 후에 다시 오세요!`;
+      } else {
+        msgContainer.innerHTML = `내년에 ${Number(age) + 1}세입니다!`;
+      }
+    } else {
+      msgContainer.innerHTML = '유효한 이름, 나이 모두 입력해주세요!';
+    }
+  }
+</script>
+
+</html>

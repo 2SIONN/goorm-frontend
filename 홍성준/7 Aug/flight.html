@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: aliceblue;
+    }
+
+    .container {
+      border-bottom: 2px solid #cbcbcb;
+    }
+
+    .header {
+      padding: 10px;
+
+      & span{
+        background-color: aqua;
+      }
+    }
+
+    .info-container {
+      display: flex;
+      padding: 20px 30px;
+      background-color: white;
+    }
+
+    .flight-detail {
+      display: flex;
+    }
+
+    .vc-line {
+      position: relative;
+      width: 2px;
+      height: 200px;
+      background-color: #cbcbcb;
+
+      &::before,
+      &::after {
+        position: absolute;
+        display: block;
+        content: '';
+        width: 10px;
+        height: 10px;
+        border: 2px solid #cbcbcb;
+        background-color: white;
+        border-radius: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &::after {
+        bottom: 0px;
+      }
+    }
+  </style>
+  <title>Flight</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h2><span>여정1</span> 서울 (ICN) ⇀ 로스앤젤레스 (LAX)</h2>
+    </div>
+    <div class="info-container">
+      <div>
+        대한항공 0017
+      </div>
+      <div class="flight-detail">
+        12월 1일
+        <div class="vc-line"></div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  [
+    {
+      "itinno": "1",
+      "segno": "1",
+      "aircd": "KE",
+      "airnm": "대한항공",
+      "fltno": "17",
+      "depcitynm": "서울",
+      "depairportnm": "인천",
+      "depdate": "20251201",
+      "deptm": "1430",
+      "arrcitynm": "로스앤젤레스",
+      "arrairportcd": "LAX",
+      "arrdate": "20251201",
+      "arrtm": "0830",
+      "bookingclass": "Y",
+      "cabinclassnm": "일반석",
+      "baggageinfo": "2개",
+      "codeshare": "",
+      "codesharenm": ""
+    },
+    {
+      "itinno": "2",
+      "segno": "1",
+      "aircd": "UA",
+      "airnm": "유나이티드항공",
+      "fltno": "391",
+      "depcitynm": "로스앤젤레스",
+      "depdate": "20251231",
+      "deptm": "0721",
+      "arrcitynm": "샌프란시스코",
+      "arrdate": "20251231",
+      "arrtm": "0848",
+      "bookingclass": "Q",
+      "cabinclassnm": "일반석",
+      "baggageinfo": "2개",
+      "codeshare": "",
+      "codesharenm": ""
+    },
+    {
+      "itinno": "3",
+      "segno": "1",
+      "aircd": "UA",
+      "airnm": "유나이티드항공",
+      "fltno": "1995",
+      "depcitynm": "샌프란시스코",
+      "depdate": "20260129",
+      "deptm": "1910",
+      "arrcitynm": "라스베이거스",
+      "arrdate": "20260129",
+      "arrtm": "2043",
+      "bookingclass": "Q",
+      "cabinclassnm": "일반석",
+      "baggageinfo": "2개",
+      "codeshare": "",
+      "codesharenm": ""
+    },
+    {
+      "itinno": "4",
+      "segno": "1",
+      "aircd": "KE",
+      "airnm": "대한항공",
+      "fltno": "7532",
+      "depcitynm": "라스베이거스",
+      "depdate": "20260227",
+      "deptm": "1950",
+      "arrcitynm": "로스앤젤레스",
+      "arrdate": "20260227",
+      "arrtm": "2110",
+      "bookingclass": "Y",
+      "cabinclassnm": "일반석",
+      "baggageinfo": "2개",
+      "codeshare": "DL",
+      "codesharenm": "델타항공"
+    },
+    {
+      "itinno": "4",
+      "segno": "2",
+      "aircd": "KE",
+      "airnm": "대한항공",
+      "fltno": "12",
+      "depcitynm": "로스앤젤레스",
+      "depdate": "20260227",
+      "deptm": "2240",
+      "arrcitynm": "서울",
+      "arrairportnm": "인천",
+      "arrdate": "20260301",
+      "arrtm": "0450",
+      "bookingclass": "Y",
+      "cabinclassnm": "일반석",
+      "baggageinfo": "2개",
+      "codeshare": "",
+      "codesharenm": ""
+    }
+  ]
+</script>
+
+</html>

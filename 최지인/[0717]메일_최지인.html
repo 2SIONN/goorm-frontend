@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    input[type=text],
+    input[type=email],
+    select,
+    textarea {
+      width: 80%;
+      height: 60%;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .wrap {
+      display: flex;
+      /* width: 100%; */
+      align-items: center;
+      height: 100%;
+    }
+
+    /* header */
+    header {
+
+      text-align: center;
+
+    }
+
+    fieldset {
+      border: 0 none;
+    }
+
+    button {
+      border: 0 none;
+      background: none;
+    }
+
+    .container {
+      width: 100%;
+      padding: 20px 20px;
+
+
+    }
+
+
+    .row {
+      width: 100%;
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+
+
+    }
+
+    .column {
+      flex: 1;
+
+      height: auto;
+    }
+
+    body {
+      background-color: #f2f2f2;
+    }
+
+    .screen-out {
+      overflow: hidden;
+      position: absolute;
+      width: 0;
+      height: 0;
+      font-size: 0;
+      line-height: 0;
+      text-indent: -9999px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 36px;
+    }
+
+    .bg-img {
+      width: 100%;
+      height: 100%;
+      background: url("porto.jpg") no-repeat 50%;
+      background-size: cover;
+    }
+
+    .item {
+      margin-bottom: 14px;
+    }
+
+    .item textarea {
+      height: 150px;
+    }
+
+    .btn-submit {
+      width: 80%;
+      background-color: rgb(19, 19, 86);
+      color: white;
+      font-size: 16px;
+      padding: 20px;
+    }
+
+    @media only screen and (max-width:640px) {
+
+      .row {
+        width: 100%;
+        flex-direction: column;
+        padding: 0 20px;
+
+      }
+
+      input[type=text],
+      input[type=email],
+      select,
+      textarea {
+
+        width: 100%;
+      }
+
+      .btn-submit {
+        width: 100%;
+      }
+
+      .column {
+        height: 500px;
+      }
+
+      .bg-img {
+        padding: 50%;
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        padding: 0;
+      }
+
+      header {
+        height: 50%;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        color: #fff;
+        padding: 0 20px;
+        display: flex;
+        flex-flow: column wrap;
+        gap: 5px;
+        justify-content: center;
+
+
+
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <body>
+    <section class="container">
+      <header>
+        <h1>Contact us!</h1>
+        <p>문의 사항을 남겨주시면, 빠른 시일 내에 연락드리겠습니다.</p>
+      </header>
+      <div class="row">
+        <div class="column">
+          <div class="bg-img"></div>
+        </div>
+        <div class="column">
+          <form action="https://formspree.io/f/mqalkykk" method="post">
+            <fieldset>
+              <legend class="screen-out">문의하기 폼</legend>
+              <div class="item">
+                <label for="username">이름</label>
+                <input type="text" id="username" placeholder="이름을 입력해주세요." autocomplete="username">
+              </div>
+              <div>
+                <label for="email">e-mail</label>
+                <input type="email" id="email" name="email" placeholder="e-mail 입력해주세요." autocomplete="email">
+              </div>
+              <div class="item">
+                <label for="type">문의 유형</label>
+                <select id="type">
+                  <option value="type1">상담 문의</option>
+                  <option value="type2">견적 문의</option>
+                  <option value="type3">방문 문의</option>
+                </select>
+              </div>
+              <div class="item">
+                <label for="message">문의 내용</label>
+                <textarea id="message" name="message" placeholder="문의 내용을 입력해주세요."></textarea>
+              </div>
+              <button type="submit" class="btn-submit" name="submit">확인</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+
+</html>

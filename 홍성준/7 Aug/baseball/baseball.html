@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    h1{
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    ol {
+      list-style-type: none;
+    }
+
+    .schedule-container {
+      display: flex;
+      align-items: center;
+      width: 100vw;
+      border: 1px solid #e2e2e2;
+      background-color: white;
+    }
+
+    .today {
+      background-color: aliceblue;
+      border: 2px solid #3ea8ff;
+    }
+
+    .date-container {
+      text-align: center;
+      width: 15%;
+    }
+
+    .matches-container {
+      width: 85%;
+    }
+
+    li {
+      width: 100%;
+      border-bottom: 1px solid #e2e2e2;
+      border-left: 1px solid #e2e2e2;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .match-container {
+      display: flex;
+      gap: 20px;
+
+      & div {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      & div:nth-child(1) {
+        width: 20%;
+        padding-left: 10px;
+        & * {
+          white-space: nowrap;
+        }
+      }
+
+      & div:nth-child(2) {
+        width: 35%;
+
+        & * {
+          width: 10%;
+          white-space: nowrap;
+          text-align: center;
+        }
+      }
+
+      & div:nth-child(3) {
+        width: 40%;
+
+        & span {
+          width: 30%;
+        }
+      }
+    }
+
+    .match-container span {
+      font-weight: 500;
+    }
+
+    span.grey {
+      color: #696969;
+    }
+
+    span.blue {
+      color: #1093ff;
+    }
+
+    span.score {
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 24px;
+    }
+
+    button {
+      width: 25%;
+      border: 1px solid #3ea8ff;
+      padding: 5px 10px;
+      color: #3ea8ff;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .disabled {
+      border-color: #696969;
+      color: #696969;
+    }
+
+    .win {
+      color: red;
+    }
+  </style>
+  <title>야구 경기</title>
+</head>
+
+<body>
+  <h1>⚾ 야구 경기 일정</h1>
+</body>
+<script>
+  const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
+  const GAME_STATUS = { 'CANCEL': '취소', 'END': '종료', 'BEFORE': '경기전' };
+  const getMatches = () => {
+    fetch('./baseball.json')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP Error status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(({ schedule }) => {
+        renderMatches(schedule);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  const renderMatches = (schedule) => {
+    Object.entries(schedule).forEach(([matchDay, matches]) => {
+      const [matchYear, matchMonth, matchDate] = [matchDay.slice(0, 4), matchDay.slice(4, 6), matchDay.slice(6)];
+      const day = WEEK[new Date(`${matchYear}.${matchMonth}.${matchDate}`).getDay()];
+      const today = new Date(); // 유틸 함수로 빼서 포매팅
+      const [year, month, date] = [today.getFullYear(), today.getMonth() + 1, today.getDate()];
+      const isToday = Number(matchYear) === year && Number(matchMonth) === month && Number(matchDate) === date;
+
+      const scheduleContainer = document.createElement('div');
+      scheduleContainer.className = isToday ? 'today schedule-container' : 'schedule-container';
+
+      const dateContainer = document.createElement('div');
+      dateContainer.className = 'date-container';
+      dateContainer.innerHTML = `<h2>${matchMonth}.${matchDate} ${isToday ? `<span class='blue'>오늘<span>` : `<span class='grey'>${day}</span>`}</h2>`;
+      scheduleContainer.appendChild(dateContainer);
+
+      const matchesContainer = document.createElement('div');
+      matchesContainer.className = 'matches-container';
+      matchesContainer.role = 'table';
+
+      matchesContainer.appendChild(createMatchContainer(matches));
+      scheduleContainer.appendChild(matchesContainer);
+      document.body.appendChild(scheduleContainer);
+    });
+  }
+
+  const createMatchContainer = (matches) => {
+    const list = document.createElement('ol');
+    matches.forEach(({
+      startTime,
+      gameStatus,
+      op,
+      fieldName,
+      gameDetailType,
+      homeTeamName,
+      homeWlt,
+      homeResult,
+      awayTeamName,
+      awayWlt,
+      awayResult,
+      homeTeamImageUrl,
+      awayTeamImageUrl
+    }) => {
+      const item = document.createElement('li');
+      const [hour, min] = [startTime.slice(0, 2), startTime.slice(2)];
+      item.innerHTML = `
+          <div class="match-container">
+            <div>
+              <span>${hour}:${min}</span>
+              <span class="grey">${fieldName}</span>
+            </div>
+            <div>
+              <span>${homeTeamName}</span>
+              <img src="${homeTeamImageUrl}" alt=${homeTeamName}
+                draggable="false">
+              <span class="${homeWlt === 'W' ? 'score win' : 'score'}">${gameStatus === 'END' ? homeResult : '-'}</span>
+              <span class="grey">${GAME_STATUS[gameStatus]}</span>
+              <span class="${awayWlt === 'W' ? 'score win' : 'score'}">${gameStatus === 'END' ? awayResult : '-'}</span>
+              <img src="${awayTeamImageUrl}" alt="${awayTeamName}"
+                draggable="false">
+              <span>${awayTeamName}</span>
+            </div>
+            <div>
+              <span class="grey">${gameDetailType.nameKo}</span>
+              <span class="grey">${op.broadcast ?? '-'}</span>
+              <button class="${gameStatus === 'END' ? '' : 'disabled'}">
+                ${gameStatus === 'END' ? '하이라이트' : gameStatus === 'CANCEL' ? '경기취소' : '문자중계'}
+              </button>
+            </div>
+          </div>
+        `;
+      list.appendChild(item);
+    });
+
+    return list;
+  }
+
+  getMatches();
+
+</script>
+
+</html>

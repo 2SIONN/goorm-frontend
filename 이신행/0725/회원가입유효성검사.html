@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+</html>
+<head>
+    <title>회원가입 유효성 검사</title>
+    
+</head>
+<style>
+    .wrap{
+        font-family: Arial, sans-serif;
+        max-width:400px;
+        margin:auto;
+        padding-top:40px;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      padding-top:10px;
+      padding-bottom:10px;
+      padding-right:0px;
+      padding-left:0px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    .message {
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding:10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      width: 100%;
+    }
+</style>
+<body>
+    <div class="wrap">
+        <h1>회원가입</h1>
+        <form>
+            <label for="email">이메일</label>
+            <input type="email" id="email" placeholder="example@email.com">
+            <div id="emailMessage" class="message"></div>
+
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" placeholder="8자 이상, 특수문자 포함">
+            <div id="passwordMessage" class="message"></div>
+            
+            <button type="button" id="button">가입하기</button>
+            <div id="submitMessage" class="message"></div>
+        </form>
+    </div>
+
+</body>
+<script>
+    const email=document.getElementById('email');
+    const emailMessage=document.getElementById('emailMessage');
+    const password=document.getElementById('password');
+    const passwordMessage=document.getElementById('passwordMessage');
+    const button=document.getElementById('button');
+    const submitMessage=document.getElementById('submitMessage');
+    button.addEventListener('click', ()=>{
+        const emailVal=email.value;
+        const passwordVal=password.value;
+        let emailcheck=false;
+        let passwordcheck=false;
+        if(!emailVal){
+            emailMessage.textContent="이메일을 입력해주세요."
+            emailMessage.style.color="red";
+        } else{
+            emailcheck=emailvalid(emailVal);
+        }
+        if(!passwordVal){
+            passwordMessage.textContent="비밀번호를 입력해주세요."
+            passwordMessage.style.color="red";
+        } else{
+            passwordcheck=passwordvalid(passwordVal);
+        }
+        if(emailcheck && passwordcheck){
+            submitMessage.textContent="회원가입이 완료되었습니다!"
+            submitMessage.style.color="green";
+        }
+
+    })
+    function emailvalid(email){
+        if(email.includes('@') && email.includes('.')){
+            emailMessage.textContent="이메일 형식이 올바릅니다!"
+            emailMessage.style.color="green";
+            return true;
+        }
+        else{
+            emailMessage.textContent="이메일 형식이 올바르지 않습니다."
+            emailMessage.style.color="red";
+            return false;
+        }
+    }
+    function passwordvalid(password){
+        if(password.length>=8 && /[!@#$%^&*]/.test(password)){
+            passwordMessage.textContent = "비밀번호 형식이 올바릅니다!"
+            passwordMessage.style.color="green";
+            return true;
+        }
+        else{
+            passwordMessage.textContent = "비밀번호 형식이 올바르지 않습니다."
+            passwordMessage.style.color="red";
+            return false;
+        }
+    }
+    
+</script>

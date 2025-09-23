@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MBTI 검사</title>
+  <style>
+    body {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .question {
+      background: #f9f9f9;
+      padding: 20px;
+      margin-bottom: 25px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    .question p {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .options {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .option {
+      display: inline-block;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    label {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #a957c2;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    input[type="radio"]:checked+label {
+      background-color: #e03f65;
+    }
+
+    #result {
+      margin: 40px 0;
+      font-size: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🧠 MBTI 간단 검사</h1>
+  <div id="result"></div>
+  <div id="quiz"></div>
+
+  <script>
+    const questions = {
+      q1: { text: "오늘 갑자기 친구가 전화와서 술 먹자고 합니다. 근데 그 자리에 당신이 모르는 사람도 껴있습니다. 당신은 참석하실건가요?", a: "E", b: "I" },  // EI
+      q2: { text: "눈을 감고 잠에 청하기 전까지 시간이 오래 걸리나요?", a: "N", b: "S" },   // SN
+      q3: { text: "당신은 리액션이 큰 편인가요?", a: "ㅅ", b: "T" },        // TF
+      q4: { text: "당신은 한달 해외여행을 떠나게 되었습니다. 그 여행에 대한 짐을 이틀 전부터 챙기나요?", a: "J", b: "P" }     // JP
+    };
+
+    const answers = {}; // 사용자의 응답을 저장할 객체
+
+    // 각 MBTI 항목 선택 시 점수 증가 (항목이 많아질 경우 유용!)
+    const score = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+    const quizEl = document.getElementById("quiz");
+    const resultEl = document.getElementById("result");
+
+    function renderQuestions() {
+
+        for(let k in questions){
+            console.log(questions[k]);
+            const quiz = document.createElement('div');
+            quiz.className = "question";
+            quiz.innerHTML = `
+                <p class="options">${questions[k].text}</p>
+                <div class="options">
+                    <input type="radio" id="${k}_yes" name="${k}" value="yes">
+                    <label for="${k}_yes" >Yes</label>
+                    <input type="radio" id="${k}_no" name="${k}" value="no">
+                    <label for="${k}_no" >No</label>
+                </div>
+
+
+            `;
+            quizEl.appendChild(quiz);
+        
+            const radios = quiz.querySelectorAll(`input[name="${k}"]`);
+            radios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                const selected = quiz.querySelector(`input[name="${k}"]:checked`);
+                //console.log(questions[`${k}`])
+                if(selected.value === "yes"){
+                    score[questions[`${k}`].a]=1;
+                    score[questions[`${k}`].b]=0;
+                }
+                if(selected.value === "no"){
+                    score[questions[`${k}`].a]=0;
+                    score[questions[`${k}`].b]=1;
+                }
+                const allAnswered = Object.keys(questions).every(key => {
+                    return document.querySelector(`input[name="${key}"]:checked`);
+                });
+
+                if (allAnswered) {
+                    showResult(score);
+                }
+                });
+                
+            });
+        }
+      // Object.entries
+      // Object.keys
+      // 모든 질문에 응답 완료하면 결과 표시
+    }
+
+    function showResult() {
+        //console.log(Object.entries(score));
+        //console.log(Object.keys(questions).length);
+        for(let i=0;i<(Object.keys(questions).length)*2;i=i+2){
+            if(Object.values(score)[i]==1){
+                answers[i] = Object.keys(score)[i];
+            } else{
+                answers[i] = Object.keys(score)[i+1];
+            }
+        }
+        console.log(Object.values(answers).join(''));
+        const result = Object.values(answers).join('');
+        resultEl.textContent = `당신의 MBTI는 ${result}입니다!`
+
+      // Object.values
+      // 사용자 응답을 반복하며 해당 지표의 점수 증가
+      // 각 항목별 점수 비교 후 MBTI 4자리 문자열 생성
+    }
+    renderQuestions();
+  </script>
+
+</body>
+
+</html>

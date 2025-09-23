@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #d3e1ff;
+      text-align: center;
+      height: 100vh;
+      padding: 10px;
+    }
+
+    .flight-container {
+      width: 800px;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.313);
+      margin: 20px auto 0;
+      background-color: white;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .seat-status {
+      background-color: #196dff;
+      padding: 2px 10px;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .flight-info-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      text-align: start;
+
+      & div:last-child {
+        text-align: end;
+      }
+    }
+  </style>
+  <title>국내선</title>
+</head>
+
+<body>
+  <div class="container"></div>
+  <script>
+    const flightData = [
+      {
+        airline: "에어서울",
+        flightNumber: "901",
+        departure: "김포 (GMP)",
+        departureTime: "2025-09-16 06:00",
+        arrival: "제주 (CJU)",
+        arrivalTime: "2025-09-16 07:15",
+        cabinClass: "할인석",
+        seatStatus: "HK"
+      },
+      {
+        airline: "진에어",
+        flightNumber: "516",
+        departure: "제주 (CJU)",
+        departureTime: "2025-09-27 21:15",
+        arrival: "김포 (GMP)",
+        arrivalTime: "2025-09-27 22:30",
+        cabinClass: "할인석",
+        seatStatus: "HK"
+      }
+    ];
+    const container = document.querySelector('.container');
+    container.innerHTML = flightData.reduce((acc, {
+      airline,
+      flightNumber,
+      departure,
+      departureTime,
+      arrival,
+      arrivalTime,
+      cabinClass,
+      seatStatus
+    }) => {
+      return acc + `
+        <div class="flight-container">
+          <div class="header">
+            <h3>${airline} ${flightNumber}</h3>
+            <p class="seat-status">${seatStatus}</p>
+          </div>
+          <div class="flight-info-container">
+            <div>
+              <p>출발: ${departure} - ${departureTime}</p>
+              <p>좌석: ${cabinClass}</p>
+            </div>
+            <div>
+              <p>도착: ${arrival} - ${arrivalTime}</p>
+              <p>항공편: ${flightNumber}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }, '<h1>항공 스케줄</h1>');
+  </script>
+</body>
+
+</html>

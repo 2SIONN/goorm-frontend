@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Layout</title>
+    <style>
+        * {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #ebebeb;
+            height: 100vh;
+            width: 100%;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%);
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        .row {
+            display: flex;
+            height: 100%;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .card1 {
+            background-color: white;
+            border: 1px solid #aaa;
+            width: 20%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            flex: 0.25;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile_img {
+            width: 100%;
+            height: auto;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            height: 100%;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .card2 {
+            background-color: white;
+            border: 1px solid #aaa;
+            flex: 5.5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            display: flex;
+        }
+
+        .card3 {
+            background-color: white;
+            border: 1px solid #aaa;
+            flex: 4.5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background-color: #6b41aa;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .introduce_container {
+            margin-top: 10px;
+        }
+
+        .flex_container {
+            display: flex;
+            align-items: center;
+            height: 20px;
+            gap: 6px;
+            margin-left: 20px;
+            margin-bottom: 5px;
+            height: auto;
+            margin-bottom: 8px;
+            margin-top: 5px;
+        }
+
+        .introduce_text {
+            font-size: small;
+            font-family: 'Courier New', Courier, monospace;
+            color: #7c7c7c;
+            margin-left: 6px;
+        }
+
+        .skills_text {
+            font-size: small;
+            font-family: 'Courier New', Courier, monospace;
+            color: #7c7c7c;
+            margin-bottom: 10px;
+            margin-left: 20px;
+        }
+
+        .job_text {
+            font-size: small;
+            font-family: 'Courier New', Courier, monospace;
+            color: #7c7c7c;
+        }
+
+
+        .icon {
+            width: 20px;
+            height: auto;
+        }
+
+        .title_text {
+            font-size: normal;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-left: 6px;
+            margin-bottom: 10px;
+        }
+
+        .divide_line {
+            height: 0.1px;
+            background-color: #ccc;
+            margin-bottom: 10px;
+            margin-left: 50%;
+            position: relative;
+            width: 98%;
+            transform: translate(-50%);
+        }
+
+        .skills_ability {
+            width: 90%;
+            height: 20px;
+            border-radius: 10px;
+            background-color: #e8e7e7;
+            margin-left: 50%;
+            transform: translate(-50%);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: small;
+            align-items: center;
+            display: flex;
+        }
+
+        .skills_bar {
+            height: 100%;
+            background-color: #6b41aa;
+            color: white;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .work_container {
+            display: flex;
+            flex-direction: column;
+            margin-left: 25px;
+            height: auto;
+            gap: 10px;
+        }
+
+        .project_container {
+            width: 97%;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            margin-bottom: 30px;
+            transform: translate(-50%);
+            margin-left: 50%;
+        }
+
+        .email_form_wrapper {
+            display: none;
+            position: fixed;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            background-color: white;
+            padding: 15px;
+            border: 1px solid #aaa;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            left: 50%;
+            transform: translate(-50%);
+            border-radius: 5px;
+        }
+
+        .email_icon_wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .email_form_wrapper input,
+        .email_form_wrapper textarea {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .project_image {
+            width: 30%;
+
+        }
+
+        .email_hi {
+            font-size: 30px;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 20px;
+        }
+
+        .checkbox {
+            position: absolute;
+            left: 3px;
+            top: 3px;
+            opacity: 0;
+
+        }
+
+        .checkbox:checked~.email_form_wrapper {
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .checkbox:checked~.email_overlay {
+            display: block;
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+            border-radius: 5px;
+        }
+
+        .submit_button {
+            border-radius: 5px;
+            background-color: rgb(158, 236, 208);
+            cursor: pointer;
+        }
+
+        .email_overlay {
+            display: none;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            left: 0;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9;
+        }
+
+        .close_button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="card1">
+                <img class="profile_img" src="profile.png" alt="">
+                <div class="introduce_container">
+                    <div class="flex_container">
+                        <img class="icon"
+                            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1icmllZmNhc2UtYnVzaW5lc3MtaWNvbiBsdWNpZGUtYnJpZWZjYXNlLWJ1c2luZXNzIj48cGF0aCBkPSJNMTIgMTJoLjAxIi8+PHBhdGggZD0iTTE2IDZWNGEyIDIgMCAwIDAtMi0yaC00YTIgMiAwIDAgMC0yIDJ2MiIvPjxwYXRoIGQ9Ik0yMiAxM2ExOC4xNSAxOC4xNSAwIDAgMS0yMCAwIi8+PHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjE0IiB4PSIyIiB5PSI2IiByeD0iMiIvPjwvc3ZnPg=="
+                            alt="">
+                        <div class="introduce_text">프론트엔드 개발자</div>
+                    </div>
+                    <div class="flex_container">
+                        <img class="icon"
+                            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1ob3VzZS1pY29uIGx1Y2lkZS1ob3VzZSI+PHBhdGggZD0iTTE1IDIxdi04YTEgMSAwIDAgMC0xLTFoLTRhMSAxIDAgMCAwLTEgMXY4Ii8+PHBhdGggZD0iTTMgMTBhMiAyIDAgMCAxIC43MDktMS41MjhsNy01Ljk5OWEyIDIgMCAwIDEgMi41ODIgMGw3IDUuOTk5QTIgMiAwIDAgMSAyMSAxMHY5YTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiIvPjwvc3ZnPg=="
+                            alt="">
+                        <div class="introduce_text">부산광역시 동래구</div>
+                    </div>
+                    <div class="flex_container">
+                        <div class="email_icon_wrapper">
+                            <input type="checkbox" id="email_button" class="checkbox">
+                            <div class="email_overlay"></div>
+                            <img class="icon"
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1tYWlsLWljb24gbHVjaWRlLW1haWwiPjxwYXRoIGQ9Im0yMiA3LTguOTkxIDUuNzI3YTIgMiAwIDAgMS0yLjAwOSAwTDIgNyIvPjxyZWN0IHg9IjIiIHk9IjQiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNiIgcng9IjIiLz48L3N2Zz4="
+                                alt="">
+                            <div class="email_form_wrapper">
+                                <label for="email_button" class="close_button">x</label>
+                                <form>
+                                    <div class="email_hi">Contact me</div>
+                                    <label for="subject">보내는 사람</label><br />
+                                    <input type="text" id="sender" name="sender" placeholder="보내는 사람"><br />
+                                    <label for="subject">제목</label><br />
+                                    <input type="text" id="title" name="title" placeholder="제목을 입력해 주세요."><br />
+                                    <label for="message">내용</label><br />
+                                    <textarea id="message" name="message" placeholder="내용을 입력해주세요."></textarea><br />
+                                    <button type="submit" style="border: none; padding: 10px;"
+                                        class="submit_button">보내기</button>
+
+                                </form>
+                                <img src="post.jpeg"
+                                    style="width: 100%; margin-top: 10px; overflow: hidden; border-radius: 10px;"
+                                    alt="">
+                            </div>
+                        </div>
+                        <div class="introduce_text">jojh0323@naver.com</div>
+                    </div>
+                    <div class="flex_container">
+                        <img class="icon"
+                            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1waG9uZS1pY29uIGx1Y2lkZS1waG9uZSI+PHBhdGggZD0iTTEzLjgzMiAxNi41NjhhMSAxIDAgMCAwIDEuMjEzLS4zMDNsLjM1NS0uNDY1QTIgMiAwIDAgMSAxNyAxNWgzYTIgMiAwIDAgMSAyIDJ2M2EyIDIgMCAwIDEtMiAyQTE4IDE4IDAgMCAxIDIgNGEyIDIgMCAwIDEgMi0yaDNhMiAyIDAgMCAxIDIgMnYzYTIgMiAwIDAgMS0uOCAxLjZsLS40NjguMzUxYTEgMSAwIDAgMC0uMjkyIDEuMjMzIDE0IDE0IDAgMCAwIDYuMzkyIDYuMzg0Ii8+PC9zdmc+"
+                            alt="">
+                        <div class="introduce_text">010-8645-4941</div>
+                    </div>
+
+                </div>
+                <div class="divide_line"></div>
+                <div class="skills_container">
+                    <div class="flex_container">
+                        <img class="icon"
+                            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1zcHJvdXQtaWNvbiBsdWNpZGUtc3Byb3V0Ij48cGF0aCBkPSJNNyAyMGgxMCIvPjxwYXRoIGQ9Ik0xMCAyMGM1LjUtMi41LjgtNi40IDMtMTAiLz48cGF0aCBkPSJNOS41IDkuNGMxLjEuOCAxLjggMi4yIDIuMyAzLjctMiAuNC0zLjUuNC00LjgtLjMtMS4yLS42LTIuMy0xLjktMy00LjIgMi44LS41IDQuNCAwIDUuNS44eiIvPjxwYXRoIGQ9Ik0xNC4xIDZhNyA3IDAgMCAwLTEuMSA0YzEuOS0uMSAzLjMtLjYgNC4zLTEuNCAxLTEgMS42LTIuMyAxLjctNC42LTIuNy4xLTQgMS00LjkgMnoiLz48L3N2Zz4="
+                            alt="">
+                        <div class="title_text">Skills</div>
+                    </div>
+                    <div class="skills_text">HTML/CSS</div>
+                    <div class="skills_ability">
+                        <div class="skills_bar" style="width: 50%;">50%</div>
+                    </div>
+                    <div class="skills_text">Javascript</div>
+                    <div class="skills_ability">
+                        <div class="skills_bar" style="width: 40%;">40%</div>
+                    </div>
+                    <div class="skills_text">Typescript</div>
+                    <div class="skills_ability">
+                        <div class="skills_bar" style="width: 50%;">50%</div>
+                    </div>
+                    <div class="skills_text">React</div>
+                    <div class="skills_ability">
+                        <div class="skills_bar" style="width: 50%;">50%</div>
+                    </div>
+                </div>
+                <div class="languages_container">
+                    <div class="title_text" style="margin-left: 20px;">Languages</div>
+                    <div class="skills_text">한국어</div>
+                    <div class="skills_ability">
+                        <div class="skills_bar" style="width: 100%;"></div>
+                    </div>
+                    <div class="skills_text">영어</div>
+                    <div class="skills_ability">
+                        <div class="skills_bar" style="width: 50%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card2">
+                    <div class="flex_container" style="margin-top: 10px; gap: 15px;">
+                        <img class="icon"
+                            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1idWlsZGluZzItaWNvbiBsdWNpZGUtYnVpbGRpbmctMiI+PHBhdGggZD0iTTYgMjJWNGEyIDIgMCAwIDEgMi0yaDhhMiAyIDAgMCAxIDIgMnYxOFoiLz48cGF0aCBkPSJNNiAxMkg0YTIgMiAwIDAgMC0yIDJ2NmEyIDIgMCAwIDAgMiAyaDIiLz48cGF0aCBkPSJNMTggOWgyYTIgMiAwIDAgMSAyIDJ2OWEyIDIgMCAwIDEtMiAyaC0yIi8+PHBhdGggZD0iTTEwIDZoNCIvPjxwYXRoIGQ9Ik0xMCAxMGg0Ii8+PHBhdGggZD0iTTEwIDE0aDQiLz48cGF0aCBkPSJNMTAgMThoNCIvPjwvc3ZnPg=="
+                            style="width: 40px;" alt="">
+                        <div class="title_text" style="font-size: 35px;">Work Experience</div>
+                    </div>
+                    <div class="work_container">
+                        <div class="title_text">Front End Developer / Google</div>
+                        <div class="flex_container" style="margin-left: 6px; margin-top: 0;">
+                            <img class="icon"
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYWxlbmRhci1pY29uIGx1Y2lkZS1jYWxlbmRhciI+PHBhdGggZD0iTTggMnY0Ii8+PHBhdGggZD0iTTE2IDJ2NCIvPjxyZWN0IHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgeD0iMyIgeT0iNCIgcng9IjIiLz48cGF0aCBkPSJNMyAxMGgxOCIvPjwvc3ZnPg==">
+                            <div class="job_text" style="margin-left: 10px; color: #6b41aa;">jan 2027 - current</div>
+                        </div>
+                        <div class="skills_text" style="margin-left: 8px;">· 프로젝트 구조 설계 및 각종 컴포넌트 개발</div>
+                        <div class="skills_text" style="margin-left: 8px;">· 소셜 로그인 및 본인인증 도입</div>
+                        <div class="skills_text" style="margin-left: 8px;">· 결제 기능 구현</div>
+                        <div class="skills_text" style="margin-left: 8px;">· 사용기술: React, Next.js, Typescript, Redux
+                        </div>
+                        <div class="divide_line"></div>
+                        <div class="title_text">Front End Developer / Kakao</div>
+                        <div class="flex_container" style="margin-left: 6px; margin-top: 0;">
+                            <img class="icon"
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYWxlbmRhci1pY29uIGx1Y2lkZS1jYWxlbmRhciI+PHBhdGggZD0iTTggMnY0Ii8+PHBhdGggZD0iTTE2IDJ2NCIvPjxyZWN0IHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgeD0iMyIgeT0iNCIgcng9IjIiLz48cGF0aCBkPSJNMyAxMGgxOCIvPjwvc3ZnPg==">
+                            <div class="job_text" style="margin-left: 10px; color: #6b41aa;">Feb 2026 - Dec 2026</div>
+                        </div>
+                        <div class="skills_text" style="margin-left: 8px;">· 프로젝트 구조 설계 및 각종 컴포넌트 개발</div>
+                        <div class="skills_text" style="margin-left: 8px;">· 소셜 로그인 및 본인인증 도입</div>
+                        <div class="skills_text" style="margin-left: 8px;">· 결제 기능 구현</div>
+                        <div class="skills_text" style="margin-left: 8px;">· 사용기술: React, Next.js, Typescript, Redux
+                        </div>
+                        <div class="divide_line"></div>
+                    </div>
+                </div>
+                <div class="card3">
+                    <div class="flex_container" style="margin-top: 10px; gap: 15px;">
+                        <img class="icon"
+                            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1zY2hvb2wtaWNvbiBsdWNpZGUtc2Nob29sIj48cGF0aCBkPSJNMTQgMjJ2LTRhMiAyIDAgMSAwLTQgMHY0Ii8+PHBhdGggZD0ibTE4IDEwIDMuNDQ3IDEuNzI0YTEgMSAwIDAgMSAuNTUzLjg5NFYyMGEyIDIgMCAwIDEtMiAySDRhMiAyIDAgMCAxLTItMnYtNy4zODJhMSAxIDAgMCAxIC41NTMtLjg5NEw2IDEwIi8+PHBhdGggZD0iTTE4IDV2MTciLz48cGF0aCBkPSJtNCA2IDcuMTA2LTMuNTUzYTIgMiAwIDAgMSAxLjc4OCAwTDIwIDYiLz48cGF0aCBkPSJNNiA1djE3Ii8+PGNpcmNsZSBjeD0iMTIiIGN5PSI5IiByPSIyIi8+PC9zdmc+"
+                            style="width: 40px;" alt="">
+                        <div class="title_text" style="font-size: 35px;">Education</div>
+
+                    </div>
+                    <div class="work_container">
+                        <div class="title_text">구름 부트캠프</div>
+                        <div class="flex_container" style="margin-left: 6px; margin-top: 0;">
+                            <img class="icon"
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYWxlbmRhci1pY29uIGx1Y2lkZS1jYWxlbmRhciI+PHBhdGggZD0iTTggMnY0Ii8+PHBhdGggZD0iTTE2IDJ2NCIvPjxyZWN0IHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgeD0iMyIgeT0iNCIgcng9IjIiLz48cGF0aCBkPSJNMyAxMGgxOCIvPjwvc3ZnPg==">
+                            <div class="job_text" style="margin-left: 10px; color: #6b41aa;">2025-2026</div>
+                        </div>
+                        <div class="skills_text">프론트엔드 개발자 과정</div>
+                        <div class="divide_line"></div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="project_container">
+            <div class="flex_container" style="margin-top: 10px; gap: 15px;">
+                <img class="icon"
+                    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1maWxlLXRleHQtaWNvbiBsdWNpZGUtZmlsZS10ZXh0Ij48cGF0aCBkPSJNMTUgMkg2YTIgMiAwIDAgMC0yIDJ2MTZhMiAyIDAgMCAwIDIgMmgxMmEyIDIgMCAwIDAgMi0yVjdaIi8+PHBhdGggZD0iTTE0IDJ2NGEyIDIgMCAwIDAgMiAyaDQiLz48cGF0aCBkPSJNMTAgOUg4Ii8+PHBhdGggZD0iTTE2IDEzSDgiLz48cGF0aCBkPSJNMTYgMTdIOCIvPjwvc3ZnPg=="
+                    style="width: 40px;" alt="">
+                <div class="title_text" style="font-size: 35px;">Projects</div>
+
+            </div>
+            <div class="work_container">
+                <div class="title_text" style="font-size: 25px;">Plog-in</div>
+                <img src="plogging.png" alt="" class="project_image" style="width: 20%;">
+                <div class="flex_container" style="margin-left: 6px; margin-top: 0;">
+                    <img class="icon"
+                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYWxlbmRhci1pY29uIGx1Y2lkZS1jYWxlbmRhciI+PHBhdGggZD0iTTggMnY0Ii8+PHBhdGggZD0iTTE2IDJ2NCIvPjxyZWN0IHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgeD0iMyIgeT0iNCIgcng9IjIiLz48cGF0aCBkPSJNMyAxMGgxOCIvPjwvc3ZnPg==">
+                    <div class="job_text" style="margin-left: 10px; color: #6b41aa;">2022.03-2022.08</div>
+                </div>
+                <div class="skills_text">Dart 기반 플로깅 어시스트 앱</div>
+                <div class="skills_text">사용기술: dart, flutter, firebase, google maps api</div>
+                <div class="divide_line"></div>
+
+            </div>
+            <div class="work_container">
+                <div class="title_text" style="font-size: 25px;">CHOP!</div>
+                <img src="chop.png" alt="" class="project_image">
+                <div class="flex_container" style="margin-left: 6px; margin-top: 0;">
+                    <img class="icon"
+                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZjQ0YTciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYWxlbmRhci1pY29uIGx1Y2lkZS1jYWxlbmRhciI+PHBhdGggZD0iTTggMnY0Ii8+PHBhdGggZD0iTTE2IDJ2NCIvPjxyZWN0IHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgeD0iMyIgeT0iNCIgcng9IjIiLz48cGF0aCBkPSJNMyAxMGgxOCIvPjwvc3ZnPg==">
+                    <div class="job_text" style="margin-left: 10px; color: #6b41aa;">2022.03-2022.08</div>
+                </div>
+                <div class="skills_text">pwa 기반 온라인 게임 현금거래 중개 서비스</div>
+                <div class="skills_text">사용기술: vite, react, typescript, pwa, restful api 미들웨어 자체 제작</div>
+                <div class="divide_line"></div>
+
+            </div>
+        </div>
+        <footer>
+
+        </footer>
+    </div>
+</body>
+
+</html>
