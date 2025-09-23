@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+</head>
+<style>
+    body{
+        background-color: rgb(106, 166, 219);
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        flex-direction: column;
+    }
+    .timer{
+        width:200px;
+        height:200px;
+        border-radius: 100%;
+        background-color: black;
+        display: flex;  
+        justify-content: center;
+        align-items: center;
+        margin:20px;
+        font-size:40px;
+    }
+    .now{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size:50px;
+        margin:30px;
+        margin-top:50px;
+    }
+    .setting{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size:20px;
+    }
+    input{
+        border-radius: 10px;
+        height:20px;
+    }
+        
+</style>
+<body>
+    <div id="now" class="now"></div>
+    <div id="setting" class="setting">
+        <input id="hour" name="hour">
+        <label for="hour">시간</label>
+        <input id="minute" name="minute">
+        <label for="minute">분</label>
+        <input id="second" name="second">
+        <label for="second">초</label>
+        <button onclick="start()">시작</button>
+    </div>
+    <div id="circle" class="circle"></div>
+    <div id="btn-container" class="btn-container"></div>
+    
+</body>
+<script>
+
+    const circle = document.getElementById('circle');
+    setInterval(()=>{
+        let nowElement = document.getElementById('now');
+        let now = new Date().toTimeString().split(" ")[0];
+        nowElement.textContent = now;
+    }, 1000);
+
+
+
+    function start(){
+        const hour = Number(document.getElementById('hour').value) || 0;
+        const minute = Number(document.getElementById('minute').value) || 0;
+        const second = Number(document.getElementById('second').value) || 0;
+
+        const timer = document.createElement('div');
+        timer.className = "timer";
+        circle.appendChild(timer);
+
+        let totaltime = hour*3600+minute*60+second;
+        let interval = null;
+
+        runtimer(timer);
+
+        function runtimer(timer){
+            if(interval!==null) return;
+            render();
+            interval = setInterval(() => {
+                if (totaltime <= 0) {
+                    clearInterval(interval);
+                    interval = null;
+                    timer.innerHTML = `<div style="color:white">완료!</div>`;
+                    return;
+                }
+                totaltime--;
+                render();
+            }, 1000);
+            function render(){
+                let hour = Math.floor(totaltime/3600);
+                let minute = Math.floor((totaltime%3600)/60);
+                let second = Math.floor((totaltime%3600)%60);
+                timer.innerHTML=`<div style="color: white;">${hour}:${minute}:${second}</div>`
+            }
+        }
+
+        const btncontainer = document.getElementById('btn-container')
+        const stop = document.createElement('button');
+        stop.className="stopbtn";
+        stop.textContent = "정지";
+        stop.addEventListener('click', ()=>{
+            clearInterval(interval);
+            interval=null;
+        })
+        btncontainer.appendChild(stop);
+
+        const restart = document.createElement('button');
+        restart.className = 'restartbtn';
+        restart.textContent = "재개";
+        restart.addEventListener('click', ()=>{
+            runtimer(timer);
+        })
+        btncontainer.appendChild(restart);
+
+
+    }
+
+
+
+</script>
+</html>
