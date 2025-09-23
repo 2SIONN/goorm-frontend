@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Users, UserPen, Pen, Book } from "lucide-react";
+import { Home, Users, UserPen, Pen, Book, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -13,12 +13,12 @@ const items = [
   },
   {
     title: "My Page",
-    url: "/mypage",
+    url: "/my-page",
     icon: UserPen,
   },
   {
     title: "Profile",
-    url: "/profile",
+    url: "/member/profile",
     icon: Users,
   },
   {
@@ -30,6 +30,11 @@ const items = [
     title: "Practice",
     url: "/practice",
     icon: Pen,
+  },
+  {
+    title: "Guestbook",
+    url: "/guestbook",
+    icon: MessageSquare,
   },
 ];
 

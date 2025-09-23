@@ -1,11 +1,11 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 export default function NotFound() {
   return (
     <div>
-      <h2>Not Found</h2>
-      <p>Could not find requested resource</p>
-      <Link href='/'>Return Home</Link>
+      <h1>404</h1>
+      <p>페이지를 찾을 수 없습니다.</p>
+      <Link href='/'>홈으로 돌아가기</Link>
     </div>
-  );
+  )
 }
