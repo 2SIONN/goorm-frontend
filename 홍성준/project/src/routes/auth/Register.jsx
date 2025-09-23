@@ -102,7 +102,7 @@ export default function Register() {
           <div className="text-center">
             <button
               type="submit"
-              className="w-full py-2 mb-2 border border-sky-500 rounded-sm cursor-pointer hover:bg-sky-300 hover:text-white duration-200"
+              className="w-full py-2 mb-2 border border-sky-500 rounded-sm hover:bg-sky-300 hover:text-white duration-200"
             >
               가입하기
             </button>

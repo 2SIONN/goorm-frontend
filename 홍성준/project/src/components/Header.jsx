@@ -10,7 +10,7 @@ export default function Header({ handleOpen, handleClose }) {
   return (
     <header className="sticky top-0 flex items-center justify-between min-h-[60px] p-4 bg-black text-white">
       <button
-        className="hover:cursor-pointer text-2xl text-sky-500"
+        className="text-2xl text-sky-500"
         onClick={handleOpen}
         aria-label="사이드바 토글"
         title="사이드바 토글"
